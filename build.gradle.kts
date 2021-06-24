@@ -1,7 +1,9 @@
+
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexer
+import org.jetbrains.grammarkit.tasks.GenerateParser
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.grammarkit.tasks.*
 
 fun properties(key: String) = project.findProperty(key).toString()
 
@@ -116,13 +118,11 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
-
 }
 
 apply(plugin = "org.jetbrains.grammarkit")
 
-tasks.register<GenerateLexer>("generateRedLibLexer")
-{
+tasks.register<GenerateLexer>("generateRedLibLexer") {
     source = "src/main/java/com/github/shuaiouke/redlibcommandfile/language/_RedLibCommandLexer.flex"
 
     targetDir = "src/main/gen/com/github/shuaiouke/redlibcommandfile/language/"
@@ -132,8 +132,7 @@ tasks.register<GenerateLexer>("generateRedLibLexer")
     purgeOldFiles = true
 }
 
-tasks.register<GenerateParser>("GenerateRedLibParser")
-{
+tasks.register<GenerateParser>("GenerateRedLibParser") {
     source = "src/main/java/com/github/shuaiouke/redlibcommandfile/language/RedLibCommand.bnf"
 
     targetRoot = "src/main/gen"
