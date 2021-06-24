@@ -11,11 +11,11 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCommandProperty(@NotNull RedLibCommandCommandProperty o) {
+  public void visitCommandDefinition(@NotNull RedLibCommandCommandDefinition o) {
     visitPsiElement(o);
   }
 
-  public void visitFirstCommand(@NotNull RedLibCommandFirstCommand o) {
+  public void visitCommandProperty(@NotNull RedLibCommandCommandProperty o) {
     visitPsiElement(o);
   }
 
@@ -31,11 +31,7 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitProperties(@NotNull RedLibCommandProperties o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSubCommand(@NotNull RedLibCommandSubCommand o) {
+  public void visitUserLine(@NotNull RedLibCommandUserLine o) {
     visitPsiElement(o);
   }
 

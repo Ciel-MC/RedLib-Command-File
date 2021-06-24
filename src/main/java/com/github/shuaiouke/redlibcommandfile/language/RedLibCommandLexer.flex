@@ -32,11 +32,13 @@ EOL=\$
 %state COMMAND
 %state HELP HELPVALUE
 %state PERMISSION PERMISSIONVALUE
+%state USER USERVALUE
 
 %%
 <YYINITIAL> {
     "help" {yybegin(HELP);return RedLibCommandTypes.HELP;}
     "permission" {yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;}
+    "user" {yybegin(USER);return RedLibCommandTypes.USER;}
     "}" {return CBRACKET;}
     {NEWLINE} {return NEWLINE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
@@ -60,6 +62,11 @@ EOL=\$
     {NEWLINE} {yybegin(YYINITIAL);return ENDLINE;}
     "." {return DOT;}
     {WORD} {return PERMISSION_VALUE;}
+}
+
+<USER> {SPACE} {yybegin(USERVALUE);return SEPARATOR;}
+<USERVALUE> {
+    {NEWLINE} {yybegin(YYINITIAL);return ENDLINE;}
 }
 
 [^] { return BAD_CHARACTER; }

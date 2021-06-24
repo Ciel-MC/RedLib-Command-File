@@ -11,14 +11,14 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.shuaiouke.redlibcommandfile.language.psi.*;
 
-public class RedLibCommandFirstCommandImpl extends ASTWrapperPsiElement implements RedLibCommandFirstCommand {
+public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement implements RedLibCommandCommandDefinition {
 
-  public RedLibCommandFirstCommandImpl(@NotNull ASTNode node) {
+  public RedLibCommandCommandDefinitionImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RedLibCommandVisitor visitor) {
-    visitor.visitFirstCommand(this);
+    visitor.visitCommandDefinition(this);
   }
 
   @Override
@@ -35,20 +35,20 @@ public class RedLibCommandFirstCommandImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @NotNull
+  public List<RedLibCommandCommandDefinition> getCommandDefinitionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandCommandDefinition.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RedLibCommandCommandProperty> getCommandPropertyList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandCommandProperty.class);
+  }
+
+  @Override
+  @NotNull
   public RedLibCommandOpenBracket getOpenBracket() {
     return findNotNullChildByClass(RedLibCommandOpenBracket.class);
-  }
-
-  @Override
-  @Nullable
-  public RedLibCommandProperties getProperties() {
-    return findChildByClass(RedLibCommandProperties.class);
-  }
-
-  @Override
-  @Nullable
-  public RedLibCommandSubCommand getSubCommand() {
-    return findChildByClass(RedLibCommandSubCommand.class);
   }
 
 }

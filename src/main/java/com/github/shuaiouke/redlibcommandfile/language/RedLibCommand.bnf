@@ -20,18 +20,17 @@
 
 root ::= root_item*
 
-private root_item ::= (FirstCommand)
+private root_item ::= (CommandDefinition)
 
-FirstCommand ::= CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket (newline|<<eof>>)
-Properties ::= CommandProperty*
+CommandDefinition ::= CommandName (Alias_Separator alias)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket (newline|<<eof>>)
 CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) ENDLINE
-//Since Subcommands can loop into itself nothing extra needs to be done
-SubCommand ::= CommandDefinition
 
 //HelpLine is a line for defining a command's subcommand "help"
 HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)*
 
 PermissionLine ::= permission Separator PERMISSION_VALUE (DOT PERMISSION_VALUE)*
+
+UserLine ::= user Separator ('player' | 'console' | 'everyone')
 
 Open_Bracket ::= OBRACKET newline
 Close_Bracket ::= CBRACKET
