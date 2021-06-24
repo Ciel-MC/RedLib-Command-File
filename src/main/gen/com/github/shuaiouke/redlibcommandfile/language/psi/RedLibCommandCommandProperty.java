@@ -13,4 +13,7 @@ public interface RedLibCommandCommandProperty extends PsiElement {
   @Nullable
   RedLibCommandPermissionLine getPermissionLine();
 
+  @Nullable
+  RedLibCommandUserLine getUserLine();
+
 }
