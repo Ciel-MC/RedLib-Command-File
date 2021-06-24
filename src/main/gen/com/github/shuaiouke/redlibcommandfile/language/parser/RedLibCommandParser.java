@@ -77,7 +77,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket newline
+  // CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket (newline|<<eof>>)
   public static boolean FirstCommand(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "FirstCommand")) return false;
     if (!nextTokenIs(b, COMMANDNAME)) return false;
@@ -88,7 +88,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     r = r && Open_Bracket(b, l + 1);
     r = r && FirstCommand_3(b, l + 1);
     r = r && Close_Bracket(b, l + 1);
-    r = r && consumeToken(b, NEWLINE);
+    r = r && FirstCommand_5(b, l + 1);
     exit_section_(b, m, FIRST_COMMAND, r);
     return r;
   }
@@ -120,6 +120,17 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     boolean r;
     r = Properties(b, l + 1);
     if (!r) r = SubCommand(b, l + 1);
+    return r;
+  }
+
+  // newline|<<eof>>
+  private static boolean FirstCommand_5(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "FirstCommand_5")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NEWLINE);
+    if (!r) r = eof(b, l + 1);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -218,13 +229,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CommandDefinition newline
+  // CommandDefinition
   public static boolean SubCommand(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "SubCommand")) return false;
     if (!nextTokenIs(b, COMMANDDEFINITION)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, COMMANDDEFINITION, NEWLINE);
+    r = consumeToken(b, COMMANDDEFINITION);
     exit_section_(b, m, SUB_COMMAND, r);
     return r;
   }

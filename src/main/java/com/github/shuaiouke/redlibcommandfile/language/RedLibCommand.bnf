@@ -22,11 +22,11 @@ root ::= root_item*
 
 private root_item ::= (FirstCommand)
 
-FirstCommand ::= CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket newline
+FirstCommand ::= CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket (newline|<<eof>>)
 Properties ::= CommandProperty*
 CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) ENDLINE
 //Since Subcommands can loop into itself nothing extra needs to be done
-SubCommand ::= CommandDefinition newline
+SubCommand ::= CommandDefinition
 
 //HelpLine is a line for defining a command's subcommand "help"
 HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)*
