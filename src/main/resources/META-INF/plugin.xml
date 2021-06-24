@@ -8,8 +8,6 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.shuaiouke.redlibcommandfile.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.shuaiouke.redlibcommandfile.services.MyProjectService"/>
         <fileType name="RedLib Command File" implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandFileType"
                   fieldName="INSTANCE" language="RLCF" extensions="rdcml"/>
         <lang.parserDefinition language="RLCF"
@@ -17,7 +15,5 @@
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.shuaiouke.redlibcommandfile.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
 </idea-plugin>
