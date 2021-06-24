@@ -30,19 +30,25 @@ SPACE=\s
 EOL=\$
 
 %state COMMAND
+%state NOARG
 %state HELP HELPVALUE
 %state PERMISSION PERMISSIONVALUE
 %state USER USERVALUE
+%state HOOK HOOKVALUE
 
 %%
 <YYINITIAL> {
     "help" {yybegin(HELP);return RedLibCommandTypes.HELP;}
     "permission" {yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;}
     "user" {yybegin(USER);return RedLibCommandTypes.USER;}
-    "}" {return CBRACKET;}
+    "hook" {yybegin(HOOK);return RedLibCommandTypes.HOOK;}
+    "nohelp" {yybegin(NOARG);return NOHELP;}
+    "notab" {yybegin(NOARG);return NOTAB;}
     {NEWLINE} {return NEWLINE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
 }
+
+<NOARG> {NEWLINE} {return NEWLINE;}
 
 <COMMAND> {
     "," {return ALIAS_SEPARATOR;}
@@ -50,23 +56,33 @@ EOL=\$
     {WORD} {return ALIAS;}
 }
 
+<HELP> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 <HELP> {SPACE} {yybegin(HELPVALUE);return SEPARATOR;}
 <HELPVALUE> {
-    {NEWLINE} {yybegin(YYINITIAL);return ENDLINE;}
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {WORD} {return HELPMESSAGE;}
     {SPACE} {return SPACE;}
 }
 
+<PERMISSION> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 <PERMISSION> {SPACE} {yybegin(PERMISSIONVALUE);return SEPARATOR;}
 <PERMISSIONVALUE> {
-    {NEWLINE} {yybegin(YYINITIAL);return ENDLINE;}
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     "." {return DOT;}
     {WORD} {return PERMISSION_VALUE;}
 }
 
+<USER> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 <USER> {SPACE} {yybegin(USERVALUE);return SEPARATOR;}
 <USERVALUE> {
-    {NEWLINE} {yybegin(YYINITIAL);return ENDLINE;}
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+}
+
+<HOOK> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+<HOOK> {SPACE} {yybegin(HOOKVALUE);return SEPARATOR;}
+<HOOKVALUE> {
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+    {WORD} {return HOOKNAME;}
 }
 
 [^] { return BAD_CHARACTER; }

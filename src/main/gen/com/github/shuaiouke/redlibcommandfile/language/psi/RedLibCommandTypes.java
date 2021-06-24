@@ -12,6 +12,9 @@ public interface RedLibCommandTypes {
   IElementType COMMAND_DEFINITION = new RedLibCommandElementType("COMMAND_DEFINITION");
   IElementType COMMAND_PROPERTY = new RedLibCommandElementType("COMMAND_PROPERTY");
   IElementType HELP_LINE = new RedLibCommandElementType("HELP_LINE");
+  IElementType HOOK_LINE = new RedLibCommandElementType("HOOK_LINE");
+  IElementType NO_HELP = new RedLibCommandElementType("NO_HELP");
+  IElementType NO_TAB = new RedLibCommandElementType("NO_TAB");
   IElementType OPEN_BRACKET = new RedLibCommandElementType("OPEN_BRACKET");
   IElementType PERMISSION_LINE = new RedLibCommandElementType("PERMISSION_LINE");
   IElementType USER_LINE = new RedLibCommandElementType("USER_LINE");
@@ -19,19 +22,18 @@ public interface RedLibCommandTypes {
   IElementType ALIAS = new RedLibCommandTokenType("alias");
   IElementType ALIAS_SEPARATOR = new RedLibCommandTokenType("Alias_Separator");
   IElementType ASSERTLINE = new RedLibCommandTokenType("AssertLine");
-  IElementType CBRACKET = new RedLibCommandTokenType("CBRACKET");
   IElementType COMMANDNAME = new RedLibCommandTokenType("CommandName");
   IElementType COMMENT = new RedLibCommandTokenType("#");
   IElementType CONTEXTLINE = new RedLibCommandTokenType("ContextLine");
   IElementType DOT = new RedLibCommandTokenType("DOT");
-  IElementType ENDLINE = new RedLibCommandTokenType("ENDLINE");
   IElementType HELP = new RedLibCommandTokenType("help");
   IElementType HELPMESSAGE = new RedLibCommandTokenType("HelpMessage");
   IElementType HELPMSGLINE = new RedLibCommandTokenType("HelpMsgLine");
-  IElementType HOOKLINE = new RedLibCommandTokenType("HookLine");
+  IElementType HOOK = new RedLibCommandTokenType("hook");
+  IElementType HOOKNAME = new RedLibCommandTokenType("hookname");
   IElementType NEWLINE = new RedLibCommandTokenType("newline");
-  IElementType NOHELP = new RedLibCommandTokenType("NoHelp");
-  IElementType NOTAB = new RedLibCommandTokenType("NoTab");
+  IElementType NOHELP = new RedLibCommandTokenType("nohelp");
+  IElementType NOTAB = new RedLibCommandTokenType("notab");
   IElementType OBRACKET = new RedLibCommandTokenType("OBRACKET");
   IElementType PERMISSION = new RedLibCommandTokenType("permission");
   IElementType PERMISSION_VALUE = new RedLibCommandTokenType("PERMISSION_VALUE");
@@ -54,6 +56,15 @@ public interface RedLibCommandTypes {
       }
       else if (type == HELP_LINE) {
         return new RedLibCommandHelpLineImpl(node);
+      }
+      else if (type == HOOK_LINE) {
+        return new RedLibCommandHookLineImpl(node);
+      }
+      else if (type == NO_HELP) {
+        return new RedLibCommandNoHelpImpl(node);
+      }
+      else if (type == NO_TAB) {
+        return new RedLibCommandNoTabImpl(node);
       }
       else if (type == OPEN_BRACKET) {
         return new RedLibCommandOpenBracketImpl(node);

@@ -26,12 +26,15 @@ public class RedLibCommandLexer implements FlexLexer {
   /** lexical states */
   public static final int YYINITIAL = 0;
   public static final int COMMAND = 2;
-  public static final int HELP = 4;
-  public static final int HELPVALUE = 6;
-  public static final int PERMISSION = 8;
-  public static final int PERMISSIONVALUE = 10;
-  public static final int USER = 12;
-  public static final int USERVALUE = 14;
+  public static final int NOARG = 4;
+  public static final int HELP = 6;
+  public static final int HELPVALUE = 8;
+  public static final int PERMISSION = 10;
+  public static final int PERMISSIONVALUE = 12;
+  public static final int USER = 14;
+  public static final int USERVALUE = 16;
+  public static final int HOOK = 18;
+  public static final int HOOKVALUE = 20;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -40,7 +43,8 @@ public class RedLibCommandLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7, 7
+     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7, 
+     8,  8,  9,  9, 10, 10
   };
 
   /** 
@@ -123,25 +127,25 @@ public class RedLibCommandLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 3232 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\1\1\2\2\1\1\2\22\0\1\1\13\0\1\20\1\0\1\22\1\0\12\3\7\0\32\3\4\0\1"+
-    "\3\1\0\4\3\1\5\2\3\1\4\1\12\2\3\1\6\1\11\1\15\1\14\1\7\1\3\1\10\1\13\1\3\1"+
-    "\16\5\3\1\21\1\0\1\17\7\0\1\1\12\0\1\1\11\0\1\3\12\0\1\3\4\0\1\3\5\0\27\3"+
-    "\1\0\12\3\4\0\14\3\16\0\5\3\7\0\1\3\1\0\1\3\1\0\5\3\1\0\2\3\2\0\4\3\1\0\1"+
-    "\3\6\0\1\3\1\0\3\3\1\0\1\3\1\0\4\3\1\0\23\3\1\0\20\3\2\0\1\3\6\0\10\3\10\0"+
-    "\16\3\1\0\1\3\1\0\2\3\1\0\2\3\1\0\1\3\10\0\13\3\5\0\3\3\15\0\12\3\4\0\6\3"+
-    "\1\0\10\3\2\0\12\3\1\0\23\3\2\0\14\3\2\0\11\3\4\0\1\3\5\0\16\3\2\0\14\3\4"+
-    "\0\5\3\1\0\10\3\6\0\20\3\2\0\13\3\2\0\16\3\1\0\1\3\3\0\4\3\2\0\11\3\2\0\2"+
-    "\3\2\0\4\3\10\0\1\3\4\0\2\3\1\0\1\3\1\0\3\3\1\0\6\3\4\0\2\3\1\0\2\3\1\0\2"+
-    "\3\1\0\2\3\2\0\1\3\1\0\5\3\4\0\2\3\2\0\3\3\3\0\1\3\7\0\4\3\1\0\1\3\7\0\20"+
-    "\3\13\0\3\3\1\0\11\3\1\0\2\3\1\0\2\3\1\0\5\3\2\0\12\3\1\0\3\3\1\0\3\3\2\0"+
-    "\1\3\30\0\1\3\7\0\3\3\1\0\10\3\2\0\6\3\2\0\2\3\2\0\3\3\10\0\2\3\4\0\2\3\1"+
-    "\0\1\3\1\0\1\3\20\0\2\3\1\0\6\3\3\0\3\3\1\0\4\3\3\0\2\3\1\0\1\3\1\0\2\3\3"+
-    "\0\2\3\3\0\3\3\3\0\5\3\3\0\3\3\1\0\4\3\2\0\1\3\6\0\1\3\10\0\4\3\1\0\10\3\1"+
-    "\0\3\3\1\0\30\3\3\0\10\3\1\0\3\3\1\0\4\3\7\0\2\3\1\0\3\3\5\0\4\3\1\0\5\3\2"+
-    "\0\4\3\5\0\2\3\7\0\1\3\2\0\2\3\16\0\3\3\1\0\10\3\1\0\7\3\1\0\3\3\1\0\5\3\5"+
-    "\0\4\3\7\0\1\3\12\0\6\3\2\0\2\3\1\0\22\3\3\0\10\3\1\0\11\3\1\0\1\3\2\0\7\3"+
-    "\3\0\1\3\4\0\6\3\1\0\1\3\1\0\10\3\2\0\2\3\14\0\17\3\2\0\2\3\1\0\1\3\2\0\2"+
-    "\3\1\0\1\3\2\0\1\3\6\0\4\3\1\0\7\3\1\0\3\3\1\0\1\3\1\0\1\3\2\0\2\3\1\0\15"+
+    "\11\0\1\1\1\2\2\1\1\2\22\0\1\1\13\0\1\23\1\0\1\25\1\0\12\3\7\0\32\3\4\0\1"+
+    "\3\1\0\1\21\1\22\2\3\1\5\2\3\1\4\1\12\1\3\1\17\1\6\1\11\1\15\1\14\1\7\1\3"+
+    "\1\10\1\13\1\20\1\16\5\3\1\24\11\0\1\1\12\0\1\1\11\0\1\3\12\0\1\3\4\0\1\3"+
+    "\5\0\27\3\1\0\12\3\4\0\14\3\16\0\5\3\7\0\1\3\1\0\1\3\1\0\5\3\1\0\2\3\2\0\4"+
+    "\3\1\0\1\3\6\0\1\3\1\0\3\3\1\0\1\3\1\0\4\3\1\0\23\3\1\0\20\3\2\0\1\3\6\0\10"+
+    "\3\10\0\16\3\1\0\1\3\1\0\2\3\1\0\2\3\1\0\1\3\10\0\13\3\5\0\3\3\15\0\12\3\4"+
+    "\0\6\3\1\0\10\3\2\0\12\3\1\0\23\3\2\0\14\3\2\0\11\3\4\0\1\3\5\0\16\3\2\0\14"+
+    "\3\4\0\5\3\1\0\10\3\6\0\20\3\2\0\13\3\2\0\16\3\1\0\1\3\3\0\4\3\2\0\11\3\2"+
+    "\0\2\3\2\0\4\3\10\0\1\3\4\0\2\3\1\0\1\3\1\0\3\3\1\0\6\3\4\0\2\3\1\0\2\3\1"+
+    "\0\2\3\1\0\2\3\2\0\1\3\1\0\5\3\4\0\2\3\2\0\3\3\3\0\1\3\7\0\4\3\1\0\1\3\7\0"+
+    "\20\3\13\0\3\3\1\0\11\3\1\0\2\3\1\0\2\3\1\0\5\3\2\0\12\3\1\0\3\3\1\0\3\3\2"+
+    "\0\1\3\30\0\1\3\7\0\3\3\1\0\10\3\2\0\6\3\2\0\2\3\2\0\3\3\10\0\2\3\4\0\2\3"+
+    "\1\0\1\3\1\0\1\3\20\0\2\3\1\0\6\3\3\0\3\3\1\0\4\3\3\0\2\3\1\0\1\3\1\0\2\3"+
+    "\3\0\2\3\3\0\3\3\3\0\5\3\3\0\3\3\1\0\4\3\2\0\1\3\6\0\1\3\10\0\4\3\1\0\10\3"+
+    "\1\0\3\3\1\0\30\3\3\0\10\3\1\0\3\3\1\0\4\3\7\0\2\3\1\0\3\3\5\0\4\3\1\0\5\3"+
+    "\2\0\4\3\5\0\2\3\7\0\1\3\2\0\2\3\16\0\3\3\1\0\10\3\1\0\7\3\1\0\3\3\1\0\5\3"+
+    "\5\0\4\3\7\0\1\3\12\0\6\3\2\0\2\3\1\0\22\3\3\0\10\3\1\0\11\3\1\0\1\3\2\0\7"+
+    "\3\3\0\1\3\4\0\6\3\1\0\1\3\1\0\10\3\2\0\2\3\14\0\17\3\2\0\2\3\1\0\1\3\2\0"+
+    "\2\3\1\0\1\3\2\0\1\3\6\0\4\3\1\0\7\3\1\0\3\3\1\0\1\3\1\0\1\3\2\0\2\3\1\0\15"+
     "\3\1\0\3\3\2\0\5\3\1\0\1\3\1\0\6\3\2\0\12\3\2\0\4\3\10\0\2\3\13\0\1\3\1\0"+
     "\1\3\1\0\1\3\4\0\12\3\1\0\24\3\3\0\5\3\1\0\12\3\6\0\1\3\11\0\6\3\1\0\1\3\5"+
     "\0\1\3\2\0\13\3\1\0\15\3\1\0\4\3\2\0\7\3\1\0\1\3\1\0\4\3\2\0\1\3\1\0\4\3\2"+
@@ -175,12 +179,13 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\10\0\1\1\1\2\4\3\1\4\1\5\1\6\1\7"+
+    "\13\0\1\1\1\2\5\3\1\4\1\5\1\6\1\7"+
     "\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17"+
-    "\6\3\1\20\1\3\1\21\5\3\1\22";
+    "\1\20\13\3\1\21\1\22\3\3\1\23\2\3\1\24"+
+    "\1\3\1\25\3\3\1\26";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[41];
+    int [] result = new int[57];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -205,15 +210,17 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\23\0\46\0\71\0\114\0\137\0\162\0\205"+
-    "\0\230\0\230\0\253\0\276\0\321\0\344\0\230\0\367"+
-    "\0\230\0\230\0\230\0\230\0\230\0\u010a\0\230\0\u011d"+
-    "\0\230\0\230\0\u0130\0\u0143\0\u0156\0\u0169\0\u017c\0\u018f"+
-    "\0\253\0\u01a2\0\253\0\u01b5\0\u01c8\0\u01db\0\u01ee\0\u0201"+
-    "\0\253";
+    "\0\0\0\26\0\54\0\102\0\130\0\156\0\204\0\232"+
+    "\0\260\0\306\0\334\0\362\0\362\0\u0108\0\u011e\0\u0134"+
+    "\0\u014a\0\u0160\0\u0176\0\362\0\362\0\362\0\362\0\362"+
+    "\0\u018c\0\362\0\u01a2\0\362\0\362\0\362\0\u01b8\0\u01ce"+
+    "\0\u01e4\0\u01fa\0\u0210\0\u0226\0\u023c\0\u0252\0\u0268\0\u027e"+
+    "\0\u0294\0\u02aa\0\u0108\0\u0108\0\u02c0\0\u02d6\0\u02ec\0\u0108"+
+    "\0\u0302\0\u0318\0\u0108\0\u032e\0\u0108\0\u0344\0\u035a\0\u0370"+
+    "\0\u0108";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[41];
+    int [] result = new int[57];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -236,22 +243,29 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\2\11\1\12\1\13\1\14\2\13\1\15\6\13\1\16"+
-    "\1\17\6\11\14\20\1\11\1\21\1\22\2\11\2\23"+
-    "\21\11\1\24\1\25\14\26\5\11\2\27\22\11\1\25"+
-    "\14\30\3\11\1\31\1\11\2\32\22\11\1\25\20\11"+
-    "\26\0\14\13\7\0\2\13\1\33\11\13\7\0\2\13"+
-    "\1\34\11\13\7\0\10\13\1\35\3\13\7\0\14\20"+
-    "\7\0\14\26\7\0\14\30\7\0\3\13\1\36\10\13"+
-    "\7\0\5\13\1\37\6\13\7\0\2\13\1\40\11\13"+
-    "\7\0\4\13\1\41\7\13\7\0\6\13\1\42\5\13"+
-    "\7\0\5\13\1\43\6\13\7\0\7\13\1\44\4\13"+
-    "\7\0\10\13\1\45\3\13\7\0\10\13\1\46\3\13"+
-    "\7\0\7\13\1\47\4\13\7\0\11\13\1\50\2\13"+
-    "\7\0\12\13\1\51\1\13\4\0";
+    "\2\14\1\15\1\16\1\17\2\16\1\20\5\16\1\21"+
+    "\1\22\4\16\6\14\20\23\1\24\1\25\3\14\1\15"+
+    "\24\14\1\26\1\27\24\14\1\30\1\27\20\31\4\14"+
+    "\1\32\1\27\25\14\1\27\20\33\2\14\1\34\1\14"+
+    "\1\35\1\27\25\14\1\27\24\14\1\36\1\27\25\14"+
+    "\1\27\20\37\3\14\31\0\20\16\6\0\2\16\1\40"+
+    "\6\16\1\41\6\16\6\0\2\16\1\42\15\16\6\0"+
+    "\11\16\1\43\6\16\6\0\10\16\1\44\7\16\6\0"+
+    "\20\23\6\0\20\31\6\0\20\33\6\0\20\37\6\0"+
+    "\3\16\1\45\14\16\6\0\11\16\1\46\6\16\6\0"+
+    "\5\16\1\47\12\16\6\0\1\16\1\50\13\16\1\51"+
+    "\2\16\6\0\2\16\1\52\15\16\6\0\4\16\1\53"+
+    "\13\16\6\0\14\16\1\54\3\16\6\0\6\16\1\55"+
+    "\11\16\6\0\2\16\1\56\15\16\6\0\16\16\1\57"+
+    "\1\16\6\0\5\16\1\60\12\16\6\0\7\16\1\61"+
+    "\10\16\6\0\3\16\1\62\14\16\6\0\17\16\1\63"+
+    "\6\0\10\16\1\64\7\16\6\0\4\16\1\65\13\16"+
+    "\6\0\10\16\1\66\7\16\6\0\7\16\1\67\10\16"+
+    "\6\0\11\16\1\70\6\16\6\0\12\16\1\71\5\16"+
+    "\3\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[532];
+    int [] result = new int[902];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -289,11 +303,11 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\10\0\2\11\4\1\1\11\1\1\5\11\1\1\1\11"+
-    "\1\1\2\11\17\1";
+    "\13\0\2\11\6\1\5\11\1\1\1\11\1\1\3\11"+
+    "\33\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[41];
+    int [] result = new int[57];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -602,92 +616,112 @@ public class RedLibCommandLexer implements FlexLexer {
             { return BAD_CHARACTER;
             } 
             // fall through
-          case 19: break;
+          case 23: break;
           case 2: 
             { return NEWLINE;
             } 
             // fall through
-          case 20: break;
+          case 24: break;
           case 3: 
             { yybegin(COMMAND);return COMMANDNAME;
             } 
             // fall through
-          case 21: break;
+          case 25: break;
           case 4: 
-            { return CBRACKET;
-            } 
-            // fall through
-          case 22: break;
-          case 5: 
             { return ALIAS;
             } 
             // fall through
-          case 23: break;
-          case 6: 
+          case 26: break;
+          case 5: 
             { return ALIAS_SEPARATOR;
             } 
             // fall through
-          case 24: break;
-          case 7: 
+          case 27: break;
+          case 6: 
             { yybegin(YYINITIAL);return OBRACKET;
             } 
             // fall through
-          case 25: break;
-          case 8: 
+          case 28: break;
+          case 7: 
             { yybegin(HELPVALUE);return SEPARATOR;
             } 
             // fall through
-          case 26: break;
+          case 29: break;
+          case 8: 
+            { yybegin(YYINITIAL);return NEWLINE;
+            } 
+            // fall through
+          case 30: break;
           case 9: 
             { return SPACE;
             } 
             // fall through
-          case 27: break;
+          case 31: break;
           case 10: 
-            { yybegin(YYINITIAL);return ENDLINE;
-            } 
-            // fall through
-          case 28: break;
-          case 11: 
             { return HELPMESSAGE;
             } 
             // fall through
-          case 29: break;
-          case 12: 
+          case 32: break;
+          case 11: 
             { yybegin(PERMISSIONVALUE);return SEPARATOR;
             } 
             // fall through
-          case 30: break;
-          case 13: 
+          case 33: break;
+          case 12: 
             { return PERMISSION_VALUE;
             } 
             // fall through
-          case 31: break;
-          case 14: 
+          case 34: break;
+          case 13: 
             { return DOT;
             } 
             // fall through
-          case 32: break;
-          case 15: 
+          case 35: break;
+          case 14: 
             { yybegin(USERVALUE);return SEPARATOR;
             } 
             // fall through
-          case 33: break;
+          case 36: break;
+          case 15: 
+            { yybegin(HOOKVALUE);return SEPARATOR;
+            } 
+            // fall through
+          case 37: break;
           case 16: 
+            { return HOOKNAME;
+            } 
+            // fall through
+          case 38: break;
+          case 17: 
             { yybegin(HELP);return RedLibCommandTypes.HELP;
             } 
             // fall through
-          case 34: break;
-          case 17: 
+          case 39: break;
+          case 18: 
+            { yybegin(HOOK);return RedLibCommandTypes.HOOK;
+            } 
+            // fall through
+          case 40: break;
+          case 19: 
             { yybegin(USER);return RedLibCommandTypes.USER;
             } 
             // fall through
-          case 35: break;
-          case 18: 
+          case 41: break;
+          case 20: 
+            { yybegin(NOARG);return NOTAB;
+            } 
+            // fall through
+          case 42: break;
+          case 21: 
+            { yybegin(NOARG);return NOHELP;
+            } 
+            // fall through
+          case 43: break;
+          case 22: 
             { yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;
             } 
             // fall through
-          case 36: break;
+          case 44: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

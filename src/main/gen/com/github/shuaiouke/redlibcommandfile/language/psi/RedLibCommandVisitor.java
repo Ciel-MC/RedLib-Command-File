@@ -23,6 +23,18 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitHookLine(@NotNull RedLibCommandHookLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNoHelp(@NotNull RedLibCommandNoHelp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNoTab(@NotNull RedLibCommandNoTab o) {
+    visitPsiElement(o);
+  }
+
   public void visitOpenBracket(@NotNull RedLibCommandOpenBracket o) {
     visitPsiElement(o);
   }

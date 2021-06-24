@@ -22,15 +22,21 @@ root ::= root_item*
 
 private root_item ::= (CommandDefinition)
 
-CommandDefinition ::= CommandName (Alias_Separator alias)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket (newline|<<eof>>)
-CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) ENDLINE
+CommandDefinition ::= CommandName (Alias_Separator alias)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket
+CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) newline
 
 //HelpLine is a line for defining a command's subcommand "help"
-HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)*
+HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)* {pin=2}
 
-PermissionLine ::= permission Separator PERMISSION_VALUE (DOT PERMISSION_VALUE)*
+PermissionLine ::= permission Separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
 
-UserLine ::= user Separator ('player' | 'console' | 'everyone')
+UserLine ::= user Separator ('player' | 'console' | 'everyone') {pin=2}
+
+HookLine ::= hook Separator hookname {pin=2}
+
+NoHelp ::= nohelp
+
+NoTab ::= notab
 
 Open_Bracket ::= OBRACKET newline
-Close_Bracket ::= CBRACKET
+Close_Bracket ::= '}' (newline|<<eof>>)
