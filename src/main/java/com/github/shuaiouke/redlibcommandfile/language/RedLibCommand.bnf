@@ -1,0 +1,37 @@
+{
+    parserClass="com.github.shuaiouke.redlibcommandfile.language.parser.RedLibCommandParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="RedLibCommand"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.github.shuaiouke.redlibcommandfile.language.psi"
+    psiImplPackage="com.github.shuaiouke.redlibcommandfile.language.psi.impl"
+
+    elementTypeHolderClass="com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandTypes"
+    elementTypeClass="com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandElementType"
+    tokenTypeClass="com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandTokenType"
+
+    tokens=[
+        comment='#'
+    ]
+
+}
+
+root ::= root_item*
+
+private root_item ::= (FirstCommand)
+
+FirstCommand ::= CommandName (Alias_Separator alias)* Open_Bracket (Properties | SubCommand) Close_Bracket newline
+Properties ::= CommandProperty*
+CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) ENDLINE
+//Since Subcommands can loop into itself nothing extra needs to be done
+SubCommand ::= CommandDefinition newline
+
+//HelpLine is a line for defining a command's subcommand "help"
+HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)*
+
+PermissionLine ::= permission Separator PERMISSION_VALUE (DOT PERMISSION_VALUE)*
+
+Open_Bracket ::= OBRACKET newline
+Close_Bracket ::= CBRACKET

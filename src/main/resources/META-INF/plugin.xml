@@ -10,6 +10,10 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.shuaiouke.redlibcommandfile.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.shuaiouke.redlibcommandfile.services.MyProjectService"/>
+        <fileType name="RedLib Command File" implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandFileType"
+                  fieldName="INSTANCE" language="RLCF" extensions="rdcml"/>
+        <lang.parserDefinition language="RLCF"
+                               implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandParserDefinition"/>
     </extensions>
 
     <applicationListeners>

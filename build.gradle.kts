@@ -1,8 +1,11 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.grammarkit.tasks.*
 
 fun properties(key: String) = project.findProperty(key).toString()
+
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 plugins {
     // Java support
@@ -17,6 +20,8 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.17.1"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+
+    id("org.jetbrains.grammarkit") version "2021.1.3"
 }
 
 group = properties("pluginGroup")
@@ -111,4 +116,31 @@ tasks {
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
     }
+
+}
+
+apply(plugin = "org.jetbrains.grammarkit")
+
+tasks.register<GenerateLexer>("generateRedLibLexer")
+{
+    source = "src/main/java/com/github/shuaiouke/redlibcommandfile/language/_RedLibCommandLexer.flex"
+
+    targetDir = "src/main/gen/com/github/shuaiouke/redlibcommandfile/language/"
+
+    targetClass = "RedLibCommandLexer"
+
+    purgeOldFiles = true
+}
+
+tasks.register<GenerateParser>("GenerateRedLibParser")
+{
+    source = "src/main/java/com/github/shuaiouke/redlibcommandfile/language/RedLibCommand.bnf"
+
+    targetRoot = "src/main/gen"
+
+    pathToParser = "/com/github/shuaiouke/redlibcommandfile/language/parser/RedLibCommandParser.java"
+
+    pathToPsiRoot = "com/github/shuaiouke/redlibcommandfile/language/psi"
+
+    purgeOldFiles = true
 }
