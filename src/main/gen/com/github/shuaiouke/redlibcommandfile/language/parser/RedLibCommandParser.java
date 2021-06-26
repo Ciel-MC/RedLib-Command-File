@@ -162,20 +162,32 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
+  // (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
   public static boolean CommandProperty(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, COMMAND_PROPERTY, "<command property>");
     r = CommandProperty_0(b, l + 1);
+    r = r && CommandProperty_1(b, l + 1);
     r = r && consumeToken(b, NEWLINE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine
+  // (SPACE)*
   private static boolean CommandProperty_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_0")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!consumeToken(b, SPACE)) break;
+      if (!empty_element_parsed_guard_(b, "CommandProperty_0", c)) break;
+    }
+    return true;
+  }
+
+  // HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine
+  private static boolean CommandProperty_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CommandProperty_1")) return false;
     boolean r;
     r = HelpLine(b, l + 1);
     if (!r) r = PermissionLine(b, l + 1);
