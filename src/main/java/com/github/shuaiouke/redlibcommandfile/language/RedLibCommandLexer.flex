@@ -49,6 +49,7 @@ EOL=\$
     "postarg" {yybegin(NOARG);return POSTARG;}
     "context" {yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;}
     "assert" {yybegin(ASSERT);return RedLibCommandTypes.ASSERT;}
+    {SPACE} {return SPACE;}
     {NEWLINE} {return NEWLINE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
 }

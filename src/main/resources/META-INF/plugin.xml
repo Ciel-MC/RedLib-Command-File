@@ -16,8 +16,11 @@
 
     <description>"Adds Support for RedLib's Command File"</description>
 
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 
+    <change-notes>
+        First major release!
+    </change-notes>
     <applicationListeners>
     </applicationListeners>
 </idea-plugin>

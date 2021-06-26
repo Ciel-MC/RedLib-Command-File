@@ -24,7 +24,7 @@ private root_item ::= (CommandDefinition)
 
 CommandDefinition ::= commandname (aliasseparator alias)* (SPACE|newline)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket
 
-CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
+CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
 
 //Help is a line for defining a command's subcommand "help"
 HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
