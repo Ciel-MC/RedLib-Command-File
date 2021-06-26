@@ -22,21 +22,28 @@ root ::= root_item*
 
 private root_item ::= (CommandDefinition)
 
-CommandDefinition ::= CommandName (Alias_Separator alias)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket
-CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelp|NoTab|PostArgLine|HelpMsgLine) newline
+CommandDefinition ::= commandname (aliasseparator alias)* (SPACE|newline)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket
 
-//HelpLine is a line for defining a command's subcommand "help"
-HelpLine ::= help Separator HelpMessage (SPACE HelpMessage)* {pin=2}
+CommandProperty ::= (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
 
-PermissionLine ::= permission Separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
+//Help is a line for defining a command's subcommand "help"
+HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
 
-UserLine ::= user Separator ('player' | 'console' | 'everyone') {pin=2}
+PermissionLine ::= permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
 
-HookLine ::= hook Separator hookname {pin=2}
+UserLine ::= user separator ('player' | 'console' | 'everyone') {pin=2}
 
-NoHelp ::= nohelp
+HookLine ::= hook separator hookname {pin=2}
 
-NoTab ::= notab
+NoHelpLine ::= nohelp
+
+NoTabLine ::= notab
+
+PostArgLine ::= postarg
+
+ContextLine ::= context separator contextname (SPACE contextname) {pin=2}
+
+AssertLine ::= assert separator assertname (SPACE assertname) {pin=2}
 
 Open_Bracket ::= OBRACKET newline
 Close_Bracket ::= '}' (newline|<<eof>>)

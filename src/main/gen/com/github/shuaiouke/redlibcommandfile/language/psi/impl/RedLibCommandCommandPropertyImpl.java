@@ -29,6 +29,18 @@ public class RedLibCommandCommandPropertyImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
+  public RedLibCommandAssertLine getAssertLine() {
+    return findChildByClass(RedLibCommandAssertLine.class);
+  }
+
+  @Override
+  @Nullable
+  public RedLibCommandContextLine getContextLine() {
+    return findChildByClass(RedLibCommandContextLine.class);
+  }
+
+  @Override
+  @Nullable
   public RedLibCommandHelpLine getHelpLine() {
     return findChildByClass(RedLibCommandHelpLine.class);
   }
@@ -41,20 +53,26 @@ public class RedLibCommandCommandPropertyImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
-  public RedLibCommandNoHelp getNoHelp() {
-    return findChildByClass(RedLibCommandNoHelp.class);
+  public RedLibCommandNoHelpLine getNoHelpLine() {
+    return findChildByClass(RedLibCommandNoHelpLine.class);
   }
 
   @Override
   @Nullable
-  public RedLibCommandNoTab getNoTab() {
-    return findChildByClass(RedLibCommandNoTab.class);
+  public RedLibCommandNoTabLine getNoTabLine() {
+    return findChildByClass(RedLibCommandNoTabLine.class);
   }
 
   @Override
   @Nullable
   public RedLibCommandPermissionLine getPermissionLine() {
     return findChildByClass(RedLibCommandPermissionLine.class);
+  }
+
+  @Override
+  @Nullable
+  public RedLibCommandPostArgLine getPostArgLine() {
+    return findChildByClass(RedLibCommandPostArgLine.class);
   }
 
   @Override

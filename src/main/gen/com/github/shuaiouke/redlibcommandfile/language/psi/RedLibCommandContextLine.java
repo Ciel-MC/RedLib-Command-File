@@ -5,6 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface RedLibCommandNoTab extends PsiElement {
+public interface RedLibCommandContextLine extends PsiElement {
 
 }

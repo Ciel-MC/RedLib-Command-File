@@ -8,19 +8,28 @@ import com.intellij.psi.PsiElement;
 public interface RedLibCommandCommandProperty extends PsiElement {
 
   @Nullable
+  RedLibCommandAssertLine getAssertLine();
+
+  @Nullable
+  RedLibCommandContextLine getContextLine();
+
+  @Nullable
   RedLibCommandHelpLine getHelpLine();
 
   @Nullable
   RedLibCommandHookLine getHookLine();
 
   @Nullable
-  RedLibCommandNoHelp getNoHelp();
+  RedLibCommandNoHelpLine getNoHelpLine();
 
   @Nullable
-  RedLibCommandNoTab getNoTab();
+  RedLibCommandNoTabLine getNoTabLine();
 
   @Nullable
   RedLibCommandPermissionLine getPermissionLine();
+
+  @Nullable
+  RedLibCommandPostArgLine getPostArgLine();
 
   @Nullable
   RedLibCommandUserLine getUserLine();

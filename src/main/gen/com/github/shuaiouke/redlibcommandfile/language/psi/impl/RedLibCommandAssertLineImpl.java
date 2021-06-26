@@ -11,14 +11,14 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.shuaiouke.redlibcommandfile.language.psi.*;
 
-public class RedLibCommandNoTabImpl extends ASTWrapperPsiElement implements RedLibCommandNoTab {
+public class RedLibCommandAssertLineImpl extends ASTWrapperPsiElement implements RedLibCommandAssertLine {
 
-  public RedLibCommandNoTabImpl(@NotNull ASTNode node) {
+  public RedLibCommandAssertLineImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RedLibCommandVisitor visitor) {
-    visitor.visitNoTab(this);
+    visitor.visitAssertLine(this);
   }
 
   @Override

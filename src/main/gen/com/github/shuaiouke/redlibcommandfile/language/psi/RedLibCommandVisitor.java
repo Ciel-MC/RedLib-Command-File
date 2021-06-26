@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class RedLibCommandVisitor extends PsiElementVisitor {
 
+  public void visitAssertLine(@NotNull RedLibCommandAssertLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitCloseBracket(@NotNull RedLibCommandCloseBracket o) {
     visitPsiElement(o);
   }
@@ -19,6 +23,10 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitContextLine(@NotNull RedLibCommandContextLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitHelpLine(@NotNull RedLibCommandHelpLine o) {
     visitPsiElement(o);
   }
@@ -27,11 +35,11 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNoHelp(@NotNull RedLibCommandNoHelp o) {
+  public void visitNoHelpLine(@NotNull RedLibCommandNoHelpLine o) {
     visitPsiElement(o);
   }
 
-  public void visitNoTab(@NotNull RedLibCommandNoTab o) {
+  public void visitNoTabLine(@NotNull RedLibCommandNoTabLine o) {
     visitPsiElement(o);
   }
 
@@ -40,6 +48,10 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
   }
 
   public void visitPermissionLine(@NotNull RedLibCommandPermissionLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPostArgLine(@NotNull RedLibCommandPostArgLine o) {
     visitPsiElement(o);
   }
 

@@ -35,6 +35,8 @@ EOL=\$
 %state PERMISSION PERMISSIONVALUE
 %state USER USERVALUE
 %state HOOK HOOKVALUE
+%state CONTEXT CONTEXTVALUE
+%state ASSERT ASSERTVALUE
 
 %%
 <YYINITIAL> {
@@ -44,6 +46,9 @@ EOL=\$
     "hook" {yybegin(HOOK);return RedLibCommandTypes.HOOK;}
     "nohelp" {yybegin(NOARG);return NOHELP;}
     "notab" {yybegin(NOARG);return NOTAB;}
+    "postarg" {yybegin(NOARG);return POSTARG;}
+    "context" {yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;}
+    "assert" {yybegin(ASSERT);return RedLibCommandTypes.ASSERT;}
     {NEWLINE} {return NEWLINE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
 }
@@ -51,8 +56,10 @@ EOL=\$
 <NOARG> {NEWLINE} {return NEWLINE;}
 
 <COMMAND> {
-    "," {return ALIAS_SEPARATOR;}
+    "," {return ALIASSEPARATOR;}
     "{" {yybegin(YYINITIAL);return OBRACKET;}
+    {NEWLINE} {return NEWLINE;}
+    {SPACE} {return SPACE;}
     {WORD} {return ALIAS;}
 }
 
@@ -83,6 +90,22 @@ EOL=\$
 <HOOKVALUE> {
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {WORD} {return HOOKNAME;}
+}
+
+<CONTEXT> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+<CONTEXT> {SPACE} {yybegin(CONTEXTVALUE);return SEPARATOR;}
+<CONTEXTVALUE> {
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+    {WORD} {return CONTEXTNAME;}
+    {SPACE} {return SPACE;}
+}
+
+<ASSERT> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+<ASSERT> {SPACE} {yybegin(ASSERTVALUE);return SEPARATOR;}
+<ASSERTVALUE> {
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+    {WORD} {return ASSERTNAME;}
+    {SPACE} {return SPACE;}
 }
 
 [^] { return BAD_CHARACTER; }

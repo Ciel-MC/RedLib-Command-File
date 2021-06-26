@@ -11,14 +11,14 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.shuaiouke.redlibcommandfile.language.psi.*;
 
-public class RedLibCommandNoHelpImpl extends ASTWrapperPsiElement implements RedLibCommandNoHelp {
+public class RedLibCommandPostArgLineImpl extends ASTWrapperPsiElement implements RedLibCommandPostArgLine {
 
-  public RedLibCommandNoHelpImpl(@NotNull ASTNode node) {
+  public RedLibCommandPostArgLineImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RedLibCommandVisitor visitor) {
-    visitor.visitNoHelp(this);
+    visitor.visitPostArgLine(this);
   }
 
   @Override

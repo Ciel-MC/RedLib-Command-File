@@ -14,6 +14,10 @@
                                implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandParserDefinition"/>
     </extensions>
 
+    <description>"Adds Support for RedLib's Command File"</description>
+
+    <version>0.1.0</version>
+
     <applicationListeners>
     </applicationListeners>
 </idea-plugin>
