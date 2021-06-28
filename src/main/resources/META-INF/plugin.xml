@@ -12,14 +12,17 @@
                   fieldName="INSTANCE" language="RLCF" extensions="rdcml"/>
         <lang.parserDefinition language="RLCF"
                                implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="RLCF"
+                                       implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
     </extensions>
 
     <description>Adds Grammar and Parsing for RedLib's Command File</description>
 
-    <version>0.2.1</version>
+    <version>0.2.2</version>
 
     <change-notes>
-        Added arguments to the mix(Please report any bugs)
+        Added syntax highlighting
     </change-notes>
     <applicationListeners>
     </applicationListeners>
