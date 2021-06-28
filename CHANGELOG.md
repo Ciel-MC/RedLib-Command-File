@@ -3,6 +3,8 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.1]
+- Added `Helpmsg` the forgotten child
 ## [0.2.0]
 - Added command arguments
 - Still cryptic prompt messages

@@ -47,6 +47,12 @@ public class RedLibCommandCommandPropertyImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
+  public RedLibCommandHelpMsgLine getHelpMsgLine() {
+    return findChildByClass(RedLibCommandHelpMsgLine.class);
+  }
+
+  @Override
+  @Nullable
   public RedLibCommandHookLine getHookLine() {
     return findChildByClass(RedLibCommandHookLine.class);
   }

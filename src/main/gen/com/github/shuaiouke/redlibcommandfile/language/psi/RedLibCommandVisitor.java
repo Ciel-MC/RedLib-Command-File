@@ -71,6 +71,10 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitHelpMsgLine(@NotNull RedLibCommandHelpMsgLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitHookLine(@NotNull RedLibCommandHookLine o) {
     visitPsiElement(o);
   }

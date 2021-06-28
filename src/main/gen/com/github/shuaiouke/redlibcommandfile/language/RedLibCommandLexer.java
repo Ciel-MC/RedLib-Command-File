@@ -29,20 +29,22 @@ public class RedLibCommandLexer implements FlexLexer {
   public static final int NOARG = 4;
   public static final int HELP = 6;
   public static final int HELPVALUE = 8;
-  public static final int PERMISSION = 10;
-  public static final int PERMISSIONVALUE = 12;
-  public static final int USER = 14;
-  public static final int USERVALUE = 16;
-  public static final int HOOK = 18;
-  public static final int HOOKVALUE = 20;
-  public static final int CONTEXT = 22;
-  public static final int CONTEXTVALUE = 24;
-  public static final int ASSERT = 26;
-  public static final int ASSERTVALUE = 28;
-  public static final int ARGS = 30;
-  public static final int FLAG = 32;
-  public static final int ARG = 34;
-  public static final int DEFAULTVALUE = 36;
+  public static final int HELPMSG = 10;
+  public static final int HELPMSGVALUE = 12;
+  public static final int PERMISSION = 14;
+  public static final int PERMISSIONVALUE = 16;
+  public static final int USER = 18;
+  public static final int USERVALUE = 20;
+  public static final int HOOK = 22;
+  public static final int HOOKVALUE = 24;
+  public static final int CONTEXT = 26;
+  public static final int CONTEXTVALUE = 28;
+  public static final int ASSERT = 30;
+  public static final int ASSERTVALUE = 32;
+  public static final int ARGS = 34;
+  public static final int FLAG = 36;
+  public static final int ARG = 38;
+  public static final int DEFAULTVALUE = 40;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -52,8 +54,8 @@ public class RedLibCommandLexer implements FlexLexer {
    */
   private static final int ZZ_LEXSTATE[] = { 
      0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6,  6,  7,  7, 
-     2,  2,  8,  8,  9,  9, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 
-    15, 15, 16, 16, 17, 17
+     8,  8,  9,  9,  2,  2, 10, 10, 11, 11, 12, 12, 13, 13, 14, 14, 
+    15, 15, 16, 16, 17, 17, 18, 18, 19, 19
   };
 
   /** 
@@ -138,9 +140,9 @@ public class RedLibCommandLexer implements FlexLexer {
   /* The ZZ_CMAP_A table has 3264 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
     "\11\0\1\3\1\4\2\3\1\5\22\0\1\3\7\0\1\41\1\42\1\1\1\0\1\37\1\10\1\11\1\0\12"+
-    "\7\1\14\4\0\1\2\1\0\32\7\1\12\1\6\1\13\1\0\1\7\1\0\1\32\1\33\1\35\1\7\1\16"+
-    "\1\7\1\34\1\15\1\23\1\7\1\30\1\17\1\22\1\26\1\25\1\20\1\7\1\21\1\24\1\31\1"+
-    "\27\2\7\1\36\2\7\1\40\11\0\1\3\12\0\1\3\11\0\1\7\12\0\1\7\4\0\1\7\5\0\27\7"+
+    "\7\1\14\4\0\1\2\1\0\32\7\1\12\1\6\1\13\1\0\1\7\1\0\1\33\1\34\1\35\1\7\1\16"+
+    "\1\7\1\23\1\15\1\25\1\7\1\31\1\17\1\21\1\27\1\26\1\20\1\7\1\24\1\22\1\32\1"+
+    "\30\2\7\1\36\2\7\1\40\11\0\1\3\12\0\1\3\11\0\1\7\12\0\1\7\4\0\1\7\5\0\27\7"+
     "\1\0\12\7\4\0\14\7\16\0\5\7\7\0\1\7\1\0\1\7\1\0\5\7\1\0\2\7\2\0\4\7\1\0\1"+
     "\7\6\0\1\7\1\0\3\7\1\0\1\7\1\0\4\7\1\0\23\7\1\0\20\7\2\0\1\7\6\0\10\7\10\0"+
     "\16\7\1\0\1\7\1\0\2\7\1\0\2\7\1\0\1\7\10\0\13\7\5\0\3\7\15\0\12\7\4\0\6\7"+
@@ -191,17 +193,18 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\4\0\1\1\14\0\1\2\1\3\1\4\1\5\7\6"+
-    "\1\7\1\10\1\11\1\12\1\13\1\14\1\1\1\13"+
-    "\1\15\1\16\1\17\1\20\1\21\1\22\1\23\1\24"+
-    "\1\25\1\26\1\27\1\30\1\31\1\32\1\33\1\34"+
-    "\1\35\1\36\1\37\1\40\1\2\1\41\10\6\1\30"+
-    "\2\0\1\42\1\43\11\6\2\0\1\44\1\45\4\6"+
-    "\1\46\2\6\1\47\3\6\1\50\4\6\1\51\1\52"+
-    "\2\6\1\53\1\54\2\6\1\55";
+    "\4\0\1\1\1\0\1\2\14\0\1\3\1\4\1\5"+
+    "\1\6\7\7\1\10\1\11\1\12\1\13\1\14\1\15"+
+    "\1\1\1\14\1\16\1\2\1\14\1\17\1\20\1\21"+
+    "\1\22\1\23\1\24\1\25\1\26\1\27\1\30\1\31"+
+    "\1\32\1\33\1\34\1\35\1\36\1\37\1\40\1\41"+
+    "\1\42\1\3\1\43\10\7\1\32\2\0\1\44\1\45"+
+    "\11\7\2\0\1\46\1\47\4\7\1\50\2\7\1\51"+
+    "\4\7\1\52\5\7\1\53\1\54\1\7\1\55\1\7"+
+    "\1\56\1\57\2\7\1\60";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[109];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -228,21 +231,22 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\43\0\106\0\151\0\214\0\257\0\322\0\365"+
     "\0\u0118\0\u013b\0\u015e\0\u0181\0\u01a4\0\u01c7\0\u01ea\0\u020d"+
-    "\0\u0230\0\u0253\0\u0276\0\u0276\0\u0276\0\u0299\0\u02bc\0\u02df"+
-    "\0\u0302\0\u0325\0\u0348\0\u036b\0\u0276\0\u038e\0\u0276\0\u0276"+
-    "\0\u0276\0\u0276\0\u03b1\0\u03b1\0\u0276\0\u03d4\0\u0276\0\u0276"+
-    "\0\u0276\0\u03f7\0\u0276\0\u041a\0\u0276\0\u043d\0\u0276\0\u0460"+
-    "\0\u0483\0\u0276\0\u04a6\0\u04c9\0\u0276\0\u0276\0\u04ec\0\u050f"+
-    "\0\u0532\0\u0276\0\u0555\0\u0578\0\u059b\0\u05be\0\u05e1\0\u0604"+
-    "\0\u0627\0\u064a\0\u066d\0\u0690\0\u06b3\0\u0276\0\u0276\0\u06d6"+
-    "\0\u06f9\0\u071c\0\u073f\0\u0762\0\u0785\0\u07a8\0\u07cb\0\u07ee"+
-    "\0\u0811\0\u0834\0\u0299\0\u0299\0\u0857\0\u087a\0\u089d\0\u08c0"+
-    "\0\u0299\0\u08e3\0\u0906\0\u0276\0\u0929\0\u094c\0\u096f\0\u0299"+
-    "\0\u0992\0\u09b5\0\u09d8\0\u09fb\0\u0299\0\u0299\0\u0a1e\0\u0a41"+
-    "\0\u0299\0\u0299\0\u0a64\0\u0a87\0\u0299";
+    "\0\u0230\0\u0253\0\u0276\0\u0299\0\u02bc\0\u02bc\0\u02bc\0\u02df"+
+    "\0\u0302\0\u0325\0\u0348\0\u036b\0\u038e\0\u03b1\0\u02bc\0\u03d4"+
+    "\0\u02bc\0\u02bc\0\u02bc\0\u02bc\0\u03f7\0\u03f7\0\u02bc\0\u041a"+
+    "\0\u041a\0\u02bc\0\u043d\0\u02bc\0\u02bc\0\u02bc\0\u0460\0\u02bc"+
+    "\0\u0483\0\u02bc\0\u04a6\0\u02bc\0\u04c9\0\u04ec\0\u02bc\0\u050f"+
+    "\0\u0532\0\u02bc\0\u02bc\0\u0555\0\u0578\0\u059b\0\u02bc\0\u05be"+
+    "\0\u05e1\0\u0604\0\u0627\0\u064a\0\u066d\0\u0690\0\u06b3\0\u06d6"+
+    "\0\u06f9\0\u071c\0\u02bc\0\u02bc\0\u073f\0\u0762\0\u0785\0\u07a8"+
+    "\0\u07cb\0\u07ee\0\u0811\0\u0834\0\u0857\0\u087a\0\u089d\0\u08c0"+
+    "\0\u02df\0\u08e3\0\u0906\0\u0929\0\u094c\0\u02df\0\u096f\0\u0992"+
+    "\0\u02bc\0\u09b5\0\u09d8\0\u09fb\0\u0a1e\0\u02df\0\u0a41\0\u0a64"+
+    "\0\u0a87\0\u0aaa\0\u0acd\0\u02df\0\u02df\0\u0af0\0\u02df\0\u0b13"+
+    "\0\u02df\0\u02df\0\u0b36\0\u0b59\0\u02df";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[109];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -265,63 +269,66 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\3\23\1\24\2\25\1\23\1\26\5\23\1\27\2\26"+
-    "\1\30\5\26\1\31\1\32\2\26\1\33\2\26\1\34"+
-    "\1\26\7\23\1\35\2\25\1\23\1\36\5\23\22\36"+
-    "\1\37\1\40\6\23\2\41\40\23\1\42\2\41\35\23"+
-    "\4\43\1\41\1\44\35\43\3\23\1\45\2\41\41\23"+
-    "\2\41\1\23\1\46\1\23\1\47\3\23\22\46\7\23"+
-    "\1\50\2\41\40\23\1\51\2\41\41\23\2\41\1\23"+
-    "\1\52\5\23\22\52\7\23\1\53\2\41\40\23\1\24"+
-    "\2\41\1\23\1\54\5\23\22\54\7\23\1\55\2\41"+
-    "\40\23\1\24\2\41\1\23\1\56\5\23\22\56\7\23"+
-    "\1\24\2\57\1\23\1\60\1\61\4\23\22\60\1\23"+
-    "\1\40\3\23\1\62\1\23\3\35\1\23\1\63\1\64"+
-    "\4\23\22\63\1\65\1\23\1\66\2\23\1\67\1\70"+
-    "\1\35\2\57\33\23\1\66\1\23\6\71\1\23\32\71"+
-    "\1\23\1\72\52\0\2\26\4\0\22\26\13\0\2\26"+
-    "\4\0\1\26\1\73\6\26\1\74\11\26\13\0\2\26"+
-    "\4\0\1\26\1\75\6\26\1\76\11\26\13\0\2\26"+
-    "\4\0\10\26\1\77\11\26\13\0\2\26\4\0\7\26"+
-    "\1\100\12\26\13\0\2\26\4\0\7\26\1\101\12\26"+
-    "\13\0\2\26\4\0\10\26\1\102\11\26\13\0\2\36"+
-    "\4\0\22\36\4\0\4\43\1\0\36\43\7\0\2\46"+
-    "\4\0\22\46\13\0\2\52\4\0\22\52\13\0\2\54"+
-    "\4\0\22\54\13\0\2\56\4\0\22\56\13\0\1\60"+
-    "\1\103\1\104\1\105\1\0\1\106\22\60\14\0\1\61"+
-    "\41\0\2\63\4\0\22\63\14\0\1\64\34\0\1\107"+
-    "\41\0\1\107\41\0\6\71\1\0\32\71\11\0\2\26"+
-    "\4\0\2\26\1\110\17\26\13\0\2\26\4\0\10\26"+
-    "\1\111\11\26\13\0\2\26\4\0\4\26\1\112\15\26"+
-    "\13\0\2\26\4\0\7\26\1\113\12\26\13\0\2\26"+
-    "\4\0\1\114\13\26\1\115\5\26\13\0\2\26\4\0"+
-    "\1\26\1\116\20\26\13\0\2\26\4\0\7\26\1\117"+
-    "\12\26\13\0\2\26\4\0\11\26\1\120\10\26\13\0"+
-    "\2\103\1\104\1\105\2\0\22\103\15\0\1\121\44\0"+
-    "\1\122\36\0\2\26\4\0\3\26\1\123\16\26\13\0"+
-    "\2\26\4\0\13\26\1\124\6\26\13\0\2\26\4\0"+
-    "\5\26\1\125\14\26\13\0\2\26\4\0\14\26\1\126"+
-    "\5\26\13\0\2\26\4\0\1\26\1\127\20\26\13\0"+
-    "\2\26\4\0\15\26\1\130\4\26\13\0\2\26\4\0"+
-    "\4\26\1\131\15\26\13\0\2\26\4\0\1\26\1\132"+
-    "\20\26\13\0\2\26\4\0\14\26\1\133\5\26\15\0"+
-    "\1\122\45\0\1\134\35\0\2\26\4\0\6\26\1\135"+
-    "\13\26\13\0\2\26\4\0\15\26\1\136\4\26\13\0"+
-    "\2\26\4\0\2\26\1\137\17\26\13\0\2\26\4\0"+
-    "\16\26\1\140\3\26\13\0\2\26\4\0\4\26\1\141"+
-    "\15\26\13\0\2\26\4\0\1\26\1\142\20\26\13\0"+
-    "\2\26\4\0\7\26\1\143\12\26\13\0\2\26\4\0"+
-    "\4\26\1\144\15\26\13\0\2\26\4\0\3\26\1\145"+
-    "\16\26\13\0\2\26\4\0\14\26\1\146\5\26\13\0"+
-    "\2\26\4\0\21\26\1\147\13\0\2\26\4\0\7\26"+
-    "\1\150\12\26\13\0\2\26\4\0\17\26\1\151\2\26"+
-    "\13\0\2\26\4\0\14\26\1\152\5\26\13\0\2\26"+
-    "\4\0\6\26\1\153\13\26\13\0\2\26\4\0\10\26"+
-    "\1\154\11\26\13\0\2\26\4\0\11\26\1\155\10\26"+
-    "\4\0";
+    "\3\25\1\26\2\27\1\25\1\30\5\25\1\31\2\30"+
+    "\1\32\6\30\1\33\1\34\2\30\1\35\1\30\1\36"+
+    "\1\30\7\25\1\37\2\27\1\25\1\40\5\25\22\40"+
+    "\1\41\1\42\6\25\2\43\40\25\1\44\2\43\35\25"+
+    "\4\45\1\43\1\46\35\45\3\25\1\47\2\43\35\25"+
+    "\4\50\1\43\1\51\35\50\3\25\1\52\2\43\41\25"+
+    "\2\43\1\25\1\53\1\25\1\54\3\25\22\53\7\25"+
+    "\1\55\2\43\40\25\1\56\2\43\41\25\2\43\1\25"+
+    "\1\57\5\25\22\57\7\25\1\60\2\43\40\25\1\26"+
+    "\2\43\1\25\1\61\5\25\22\61\7\25\1\62\2\43"+
+    "\40\25\1\26\2\43\1\25\1\63\5\25\22\63\7\25"+
+    "\1\26\2\64\1\25\1\65\1\66\4\25\22\65\1\25"+
+    "\1\42\3\25\1\67\1\25\3\37\1\25\1\70\1\71"+
+    "\4\25\22\70\1\72\1\25\1\73\2\25\1\74\1\75"+
+    "\1\37\2\64\33\25\1\73\1\25\6\76\1\25\32\76"+
+    "\1\25\1\77\52\0\2\30\4\0\22\30\13\0\2\30"+
+    "\4\0\1\30\1\100\7\30\1\101\10\30\13\0\2\30"+
+    "\4\0\1\30\1\102\7\30\1\103\10\30\13\0\2\30"+
+    "\4\0\11\30\1\104\10\30\13\0\2\30\4\0\5\30"+
+    "\1\105\14\30\13\0\2\30\4\0\5\30\1\106\14\30"+
+    "\13\0\2\30\4\0\11\30\1\107\10\30\13\0\2\40"+
+    "\4\0\22\40\4\0\4\45\1\0\36\45\4\50\1\0"+
+    "\36\50\7\0\2\53\4\0\22\53\13\0\2\57\4\0"+
+    "\22\57\13\0\2\61\4\0\22\61\13\0\2\63\4\0"+
+    "\22\63\13\0\1\65\1\110\1\111\1\112\1\0\1\113"+
+    "\22\65\14\0\1\66\41\0\2\70\4\0\22\70\14\0"+
+    "\1\71\34\0\1\114\41\0\1\114\41\0\6\76\1\0"+
+    "\32\76\11\0\2\30\4\0\2\30\1\115\17\30\13\0"+
+    "\2\30\4\0\11\30\1\116\10\30\13\0\2\30\4\0"+
+    "\7\30\1\117\12\30\13\0\2\30\4\0\5\30\1\120"+
+    "\14\30\13\0\2\30\4\0\1\121\14\30\1\122\4\30"+
+    "\13\0\2\30\4\0\1\30\1\123\20\30\13\0\2\30"+
+    "\4\0\5\30\1\124\14\30\13\0\2\30\4\0\12\30"+
+    "\1\125\7\30\13\0\2\110\1\111\1\112\2\0\22\110"+
+    "\15\0\1\126\44\0\1\127\36\0\2\30\4\0\3\30"+
+    "\1\130\16\30\13\0\2\30\4\0\14\30\1\131\5\30"+
+    "\13\0\2\30\4\0\4\30\1\132\15\30\13\0\2\30"+
+    "\4\0\15\30\1\133\4\30\13\0\2\30\4\0\1\30"+
+    "\1\134\20\30\13\0\2\30\4\0\16\30\1\135\3\30"+
+    "\13\0\2\30\4\0\7\30\1\136\12\30\13\0\2\30"+
+    "\4\0\1\30\1\137\20\30\13\0\2\30\4\0\15\30"+
+    "\1\140\4\30\15\0\1\127\45\0\1\141\35\0\2\30"+
+    "\4\0\4\30\1\142\15\30\13\0\2\30\4\0\10\30"+
+    "\1\143\11\30\13\0\2\30\4\0\16\30\1\144\3\30"+
+    "\13\0\2\30\4\0\2\30\1\145\17\30\13\0\2\30"+
+    "\4\0\17\30\1\146\2\30\13\0\2\30\4\0\7\30"+
+    "\1\147\12\30\13\0\2\30\4\0\1\30\1\150\20\30"+
+    "\13\0\2\30\4\0\5\30\1\151\14\30\13\0\2\30"+
+    "\4\0\5\30\1\152\14\30\13\0\2\30\4\0\7\30"+
+    "\1\153\12\30\13\0\2\30\4\0\3\30\1\154\16\30"+
+    "\13\0\2\30\4\0\15\30\1\155\4\30\13\0\2\30"+
+    "\4\0\21\30\1\156\13\0\2\30\4\0\6\30\1\157"+
+    "\13\30\13\0\2\30\4\0\5\30\1\160\14\30\13\0"+
+    "\2\30\4\0\6\30\1\161\13\30\13\0\2\30\4\0"+
+    "\15\30\1\162\4\30\13\0\2\30\4\0\10\30\1\163"+
+    "\11\30\13\0\2\30\4\0\11\30\1\164\10\30\13\0"+
+    "\2\30\4\0\12\30\1\165\7\30\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[2730];
+    int [] result = new int[2940];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -359,14 +366,14 @@ public class RedLibCommandLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\4\0\1\1\14\0\1\1\3\11\7\1\1\11\1\1"+
-    "\4\11\2\1\1\11\1\1\3\11\1\1\1\11\1\1"+
-    "\1\11\1\1\1\11\2\1\1\11\2\1\2\11\3\1"+
-    "\1\11\11\1\2\0\2\11\11\1\2\0\11\1\1\11"+
-    "\21\1";
+    "\4\0\1\1\1\0\1\1\14\0\1\1\3\11\7\1"+
+    "\1\11\1\1\4\11\2\1\1\11\2\1\1\11\1\1"+
+    "\3\11\1\1\1\11\1\1\1\11\1\1\1\11\2\1"+
+    "\1\11\2\1\2\11\3\1\1\11\11\1\2\0\2\11"+
+    "\11\1\2\0\11\1\1\11\24\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[109];
+    int [] result = new int[117];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -675,227 +682,242 @@ public class RedLibCommandLexer implements FlexLexer {
             { return HELPMESSAGE;
             } 
             // fall through
-          case 46: break;
-          case 2: 
-            { return DEFAULT_VALUE;
-            } 
-            // fall through
-          case 47: break;
-          case 3: 
-            { return BAD_CHARACTER;
-            } 
-            // fall through
-          case 48: break;
-          case 4: 
-            { return SPACE;
-            } 
-            // fall through
           case 49: break;
-          case 5: 
-            { return NEWLINE;
+          case 2: 
+            { return HELPMSGKEY;
             } 
             // fall through
           case 50: break;
-          case 6: 
-            { yybegin(COMMAND);return COMMANDNAME;
+          case 3: 
+            { return DEFAULT_VALUE;
             } 
             // fall through
           case 51: break;
-          case 7: 
-            { yybegin(ARGS);return SPACE;
+          case 4: 
+            { return BAD_CHARACTER;
             } 
             // fall through
           case 52: break;
-          case 8: 
-            { return ALIAS;
+          case 5: 
+            { return SPACE;
             } 
             // fall through
           case 53: break;
-          case 9: 
-            { return ALIASSEPARATOR;
+          case 6: 
+            { return NEWLINE;
             } 
             // fall through
           case 54: break;
-          case 10: 
-            { yybegin(YYINITIAL);return OBRACKET;
+          case 7: 
+            { yybegin(COMMAND);return COMMANDNAME;
             } 
             // fall through
           case 55: break;
-          case 11: 
-            { yybegin(YYINITIAL);return NEWLINE;
+          case 8: 
+            { yybegin(ARGS);return SPACE;
             } 
             // fall through
           case 56: break;
-          case 12: 
-            { yybegin(HELPVALUE);return SEPARATOR;
+          case 9: 
+            { return ALIAS;
             } 
             // fall through
           case 57: break;
-          case 13: 
-            { yybegin(PERMISSIONVALUE);return SEPARATOR;
+          case 10: 
+            { return ALIASSEPARATOR;
             } 
             // fall through
           case 58: break;
-          case 14: 
-            { return PERMISSION_VALUE;
+          case 11: 
+            { yybegin(YYINITIAL);return OBRACKET;
             } 
             // fall through
           case 59: break;
-          case 15: 
-            { return DOT;
+          case 12: 
+            { yybegin(YYINITIAL);return NEWLINE;
             } 
             // fall through
           case 60: break;
-          case 16: 
-            { yybegin(USERVALUE);return SEPARATOR;
+          case 13: 
+            { yybegin(HELPVALUE);return SEPARATOR;
             } 
             // fall through
           case 61: break;
-          case 17: 
-            { yybegin(HOOKVALUE);return SEPARATOR;
+          case 14: 
+            { yybegin(HELPMSGVALUE);return SEPARATOR;
             } 
             // fall through
           case 62: break;
-          case 18: 
-            { return HOOKNAME;
+          case 15: 
+            { yybegin(PERMISSIONVALUE);return SEPARATOR;
             } 
             // fall through
           case 63: break;
-          case 19: 
-            { yybegin(CONTEXTVALUE);return SEPARATOR;
+          case 16: 
+            { return PERMISSION_VALUE;
             } 
             // fall through
           case 64: break;
-          case 20: 
-            { return CONTEXTNAME;
+          case 17: 
+            { return DOT;
             } 
             // fall through
           case 65: break;
-          case 21: 
-            { yybegin(ASSERTVALUE);return SEPARATOR;
+          case 18: 
+            { yybegin(USERVALUE);return SEPARATOR;
             } 
             // fall through
           case 66: break;
-          case 22: 
-            { return ASSERTNAME;
+          case 19: 
+            { yybegin(HOOKVALUE);return SEPARATOR;
             } 
             // fall through
           case 67: break;
-          case 23: 
-            { yybegin(COMMAND);return NEWLINE;
+          case 20: 
+            { return HOOKNAME;
             } 
             // fall through
           case 68: break;
-          case 24: 
-            { yybegin(ARG);return ARG_NAME;
+          case 21: 
+            { yybegin(CONTEXTVALUE);return SEPARATOR;
             } 
             // fall through
           case 69: break;
-          case 25: 
-            { yybegin(FLAG);return DASHES;
+          case 22: 
+            { return CONTEXTNAME;
             } 
             // fall through
           case 70: break;
-          case 26: 
-            { return FLAG_MODIFIER;
+          case 23: 
+            { yybegin(ASSERTVALUE);return SEPARATOR;
             } 
             // fall through
           case 71: break;
-          case 27: 
-            { return FLAG_NAME;
+          case 24: 
+            { return ASSERTNAME;
             } 
             // fall through
           case 72: break;
-          case 28: 
-            { return DASHES;
+          case 25: 
+            { yybegin(COMMAND);return NEWLINE;
             } 
             // fall through
           case 73: break;
-          case 29: 
-            { return COMMA;
+          case 26: 
+            { yybegin(ARG);return ARG_NAME;
             } 
             // fall through
           case 74: break;
-          case 30: 
-            { yybegin(DEFAULTVALUE);return BRACKET_OPEN;
+          case 27: 
+            { yybegin(FLAG);return DASHES;
             } 
             // fall through
           case 75: break;
-          case 31: 
-            { return NOSHOWTYPE;
+          case 28: 
+            { return FLAG_MODIFIER;
             } 
             // fall through
           case 76: break;
-          case 32: 
-            { return NOTREQUIRED;
+          case 29: 
+            { return FLAG_NAME;
             } 
             // fall through
           case 77: break;
-          case 33: 
-            { yybegin(ARGS);return BRACKET_CLOSE;
+          case 30: 
+            { return DASHES;
             } 
             // fall through
           case 78: break;
-          case 34: 
-            { return ARG_TYPE;
+          case 31: 
+            { return COMMA;
             } 
             // fall through
           case 79: break;
-          case 35: 
-            { return BOTHMODIFIERS;
+          case 32: 
+            { yybegin(DEFAULTVALUE);return BRACKET_OPEN;
             } 
             // fall through
           case 80: break;
-          case 36: 
-            { yybegin(HELP);return RedLibCommandTypes.HELP;
+          case 33: 
+            { return NOSHOWTYPE;
             } 
             // fall through
           case 81: break;
-          case 37: 
-            { yybegin(HOOK);return RedLibCommandTypes.HOOK;
+          case 34: 
+            { return NOTREQUIRED;
             } 
             // fall through
           case 82: break;
-          case 38: 
-            { yybegin(USER);return RedLibCommandTypes.USER;
+          case 35: 
+            { yybegin(ARGS);return BRACKET_CLOSE;
             } 
             // fall through
           case 83: break;
-          case 39: 
-            { return ARG_TYPE_CONSUME;
+          case 36: 
+            { return ARG_TYPE;
             } 
             // fall through
           case 84: break;
-          case 40: 
-            { yybegin(NOARG);return NOTAB;
+          case 37: 
+            { return BOTHMODIFIERS;
             } 
             // fall through
           case 85: break;
-          case 41: 
-            { yybegin(NOARG);return NOHELP;
+          case 38: 
+            { yybegin(HELP);return RedLibCommandTypes.HELP;
             } 
             // fall through
           case 86: break;
-          case 42: 
-            { yybegin(ASSERT);return RedLibCommandTypes.ASSERT;
+          case 39: 
+            { yybegin(HOOK);return RedLibCommandTypes.HOOK;
             } 
             // fall through
           case 87: break;
-          case 43: 
-            { yybegin(NOARG);return POSTARG;
+          case 40: 
+            { yybegin(USER);return RedLibCommandTypes.USER;
             } 
             // fall through
           case 88: break;
-          case 44: 
-            { yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;
+          case 41: 
+            { return ARG_TYPE_CONSUME;
             } 
             // fall through
           case 89: break;
-          case 45: 
-            { yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;
+          case 42: 
+            { yybegin(NOARG);return NOTAB;
             } 
             // fall through
           case 90: break;
+          case 43: 
+            { yybegin(NOARG);return NOHELP;
+            } 
+            // fall through
+          case 91: break;
+          case 44: 
+            { yybegin(ASSERT);return RedLibCommandTypes.ASSERT;
+            } 
+            // fall through
+          case 92: break;
+          case 45: 
+            { yybegin(HELPMSG);return RedLibCommandTypes.HELPMSG;
+            } 
+            // fall through
+          case 93: break;
+          case 46: 
+            { yybegin(NOARG);return POSTARG;
+            } 
+            // fall through
+          case 94: break;
+          case 47: 
+            { yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;
+            } 
+            // fall through
+          case 95: break;
+          case 48: 
+            { yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;
+            } 
+            // fall through
+          case 96: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

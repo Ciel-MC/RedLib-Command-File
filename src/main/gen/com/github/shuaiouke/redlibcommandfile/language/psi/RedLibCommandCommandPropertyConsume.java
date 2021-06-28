@@ -17,6 +17,9 @@ public interface RedLibCommandCommandPropertyConsume extends PsiElement {
   RedLibCommandHelpLine getHelpLine();
 
   @Nullable
+  RedLibCommandHelpMsgLine getHelpMsgLine();
+
+  @Nullable
   RedLibCommandHookLine getHookLine();
 
   @Nullable
