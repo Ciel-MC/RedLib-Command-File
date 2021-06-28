@@ -2,8 +2,12 @@
 
 # RedLib-Command-File Changelog
 
-## [Unreleased]
+## [0.2.0]
+- Added command arguments
+- Still cryptic prompt messages
 ## [0.1.1]
+- Completed all command properties
 ## [0.0.3]
+- Added basic functionality
 ### Added
 - Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
