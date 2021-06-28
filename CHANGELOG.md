@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.2]
 - Added syntax highlighting
 ## [0.2.1]
 - Added `Helpmsg` the forgotten child
