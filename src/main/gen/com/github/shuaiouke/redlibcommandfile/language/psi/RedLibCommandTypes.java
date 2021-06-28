@@ -24,6 +24,7 @@ public interface RedLibCommandTypes {
   IElementType CONTEXT_LINE = new RedLibCommandElementType("CONTEXT_LINE");
   IElementType FLAG = new RedLibCommandElementType("FLAG");
   IElementType HELP_LINE = new RedLibCommandElementType("HELP_LINE");
+  IElementType HELP_MSG_LINE = new RedLibCommandElementType("HELP_MSG_LINE");
   IElementType HOOK_LINE = new RedLibCommandElementType("HOOK_LINE");
   IElementType LINE = new RedLibCommandElementType("LINE");
   IElementType LINE_CONSUME = new RedLibCommandElementType("LINE_CONSUME");
@@ -56,6 +57,9 @@ public interface RedLibCommandTypes {
   IElementType FLAG_NAME = new RedLibCommandTokenType("FLAG_NAME");
   IElementType HELP = new RedLibCommandTokenType("help");
   IElementType HELPMESSAGE = new RedLibCommandTokenType("helpmessage");
+  IElementType HELPMESSAGEKEY = new RedLibCommandTokenType("helpmessagekey");
+  IElementType HELPMSG = new RedLibCommandTokenType("helpmsg");
+  IElementType HELPMSGKEY = new RedLibCommandTokenType("helpmsgkey");
   IElementType HOOK = new RedLibCommandTokenType("hook");
   IElementType HOOKNAME = new RedLibCommandTokenType("hookname");
   IElementType NEWLINE = new RedLibCommandTokenType("newline");
@@ -121,6 +125,9 @@ public interface RedLibCommandTypes {
       }
       else if (type == HELP_LINE) {
         return new RedLibCommandHelpLineImpl(node);
+      }
+      else if (type == HELP_MSG_LINE) {
+        return new RedLibCommandHelpMsgLineImpl(node);
       }
       else if (type == HOOK_LINE) {
         return new RedLibCommandHookLineImpl(node);

@@ -16,7 +16,7 @@
 
     <description>Adds Grammar and Parsing for RedLib's Command File</description>
 
-    <version>0.2.0</version>
+    <version>0.2.1</version>
 
     <change-notes>
         Added arguments to the mix(Please report any bugs)

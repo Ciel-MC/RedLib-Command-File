@@ -41,6 +41,7 @@ EOL=\$
 %state COMMAND
 %state NOARG
 %state HELP HELPVALUE
+%state HELPMSG HELPMSGVALUE
 %state PERMISSION PERMISSIONVALUE
 %state USER USERVALUE
 %state HOOK HOOKVALUE
@@ -53,6 +54,7 @@ EOL=\$
 
 %%
 <YYINITIAL> {
+    "helpmsg" {yybegin(HELPMSG);return RedLibCommandTypes.HELPMSG;}
     "help" {yybegin(HELP);return RedLibCommandTypes.HELP;}
     "permission" {yybegin(PERMISSION);return RedLibCommandTypes.PERMISSION;}
     "user" {yybegin(USER);return RedLibCommandTypes.USER;}
@@ -124,6 +126,14 @@ EOL=\$
 <HELPVALUE> {
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {HELPMESSAGE} {return HELPMESSAGE;}
+    {SPACE} {return SPACE;}
+}
+
+<HELPMSG> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+<HELPMSG> {SPACE} {yybegin(HELPMSGVALUE);return SEPARATOR;}
+<HELPMSGVALUE> {
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+    {HELPMESSAGE} {return HELPMSGKEY;}
     {SPACE} {return SPACE;}
 }
 

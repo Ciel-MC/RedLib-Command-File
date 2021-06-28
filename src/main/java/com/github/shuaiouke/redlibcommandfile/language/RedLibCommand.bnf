@@ -34,12 +34,14 @@ Line_Consume ::= CommandProperty_Consume | CommandDef
 
 Blank_Line ::= newline
 
-CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
+CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HelpMsgLine) newline
 
-CommandProperty_Consume ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine) newline
+CommandProperty_Consume ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
 
 //Help is a line for defining a command's subcommand "help"
 HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
+
+HelpMsgLine ::= helpmsg separator helpmsgkey (SPACE helpmessagekey)* {pin=2}
 
 PermissionLine ::= permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
 
