@@ -22,8 +22,17 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 %type IElementType
 %unicode
 
+NOSHOWTYPE=\*
+NOREQ=\?
+NOSHOWTYPENOREQ=\*\?|\?\*
 CRLF=\R
-WORD=\w+
+QUOTE=([^\(\)\\])*
+HELPMESSAGE=([^\n])*
+ARG_TYPE_CONSUME=[\w\d][\w\d\-]*("..."|"[]")\:
+VAR_TYPE=\w+\:
+DASH=\-+
+WORD=[\w\d][\w\d\-]*
+ALPHA=\w+
 NEWLINE=[\r\n]
 WHITE_SPACE=[\ \n\t\f]
 SPACE=\s
@@ -37,6 +46,10 @@ EOL=\$
 %state HOOK HOOKVALUE
 %state CONTEXT CONTEXTVALUE
 %state ASSERT ASSERTVALUE
+%state ARGS
+%state FLAG
+%state ARG
+%state DEFAULTVALUE
 
 %%
 <YYINITIAL> {
@@ -49,26 +62,68 @@ EOL=\$
     "postarg" {yybegin(NOARG);return POSTARG;}
     "context" {yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;}
     "assert" {yybegin(ASSERT);return RedLibCommandTypes.ASSERT;}
-    {SPACE} {return SPACE;}
     {NEWLINE} {return NEWLINE;}
+    {SPACE} {return SPACE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
 }
 
-<NOARG> {NEWLINE} {return NEWLINE;}
+<NOARG> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 
 <COMMAND> {
     "," {return ALIASSEPARATOR;}
     "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {return NEWLINE;}
-    {SPACE} {return SPACE;}
+    {SPACE} {yybegin(ARGS);return SPACE;}
     {WORD} {return ALIAS;}
+}
+
+<ARGS>
+{
+    //skip to flag section
+    {DASH} {yybegin(FLAG);return DASHES;}
+    {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
+    {SPACE} {return SPACE;}
+    {ARG_TYPE_CONSUME} {return ARG_TYPE_CONSUME;}
+    {VAR_TYPE} {return ARG_TYPE;}
+    //Jump to arguments section
+    {WORD} {yybegin(ARG);return ARG_NAME;}
+}
+
+<FLAG>
+{
+    "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
+    //For aliases
+    "," {return COMMA;}
+    {DASH} {return DASHES;}
+    {SPACE} {yybegin(ARGS);return SPACE;}
+    {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
+    //Report a flag name
+    {WORD} {return FLAG_NAME;}
+    {NOSHOWTYPE} {return FLAG_MODIFIER;}
+}
+
+<ARG>
+{
+    "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
+    {NOSHOWTYPE} {return NOSHOWTYPE;}
+    {NOREQ} {return NOTREQUIRED;}
+    {NOSHOWTYPENOREQ} {return BOTHMODIFIERS;}
+    {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
+    {SPACE} {yybegin(ARGS);return SPACE;}
+}
+
+<DEFAULTVALUE>
+{
+    ")" {yybegin(ARGS);return BRACKET_CLOSE;}
+    {QUOTE} {return DEFAULT_VALUE;}
 }
 
 <HELP> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 <HELP> {SPACE} {yybegin(HELPVALUE);return SEPARATOR;}
 <HELPVALUE> {
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-    {WORD} {return HELPMESSAGE;}
+    {HELPMESSAGE} {return HELPMESSAGE;}
     {SPACE} {return SPACE;}
 }
 

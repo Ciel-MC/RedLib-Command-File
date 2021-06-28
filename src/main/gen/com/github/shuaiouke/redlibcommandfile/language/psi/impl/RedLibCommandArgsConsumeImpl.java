@@ -11,14 +11,14 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.shuaiouke.redlibcommandfile.language.psi.*;
 
-public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement implements RedLibCommandCommandDefinition {
+public class RedLibCommandArgsConsumeImpl extends ASTWrapperPsiElement implements RedLibCommandArgsConsume {
 
-  public RedLibCommandCommandDefinitionImpl(@NotNull ASTNode node) {
+  public RedLibCommandArgsConsumeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RedLibCommandVisitor visitor) {
-    visitor.visitCommandDefinition(this);
+    visitor.visitArgsConsume(this);
   }
 
   @Override
@@ -28,33 +28,21 @@ public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement imp
   }
 
   @Override
-  @Nullable
-  public RedLibCommandArgs getArgs() {
-    return findChildByClass(RedLibCommandArgs.class);
+  @NotNull
+  public List<RedLibCommandArg> getArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandArg.class);
   }
 
   @Override
   @NotNull
-  public List<RedLibCommandBlankLine> getBlankLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandBlankLine.class);
+  public RedLibCommandConsumingArg getConsumingArg() {
+    return findNotNullChildByClass(RedLibCommandConsumingArg.class);
   }
 
   @Override
   @NotNull
-  public RedLibCommandCloseBracket getCloseBracket() {
-    return findNotNullChildByClass(RedLibCommandCloseBracket.class);
-  }
-
-  @Override
-  @NotNull
-  public List<RedLibCommandLine> getLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandLine.class);
-  }
-
-  @Override
-  @NotNull
-  public RedLibCommandOpenBracket getOpenBracket() {
-    return findNotNullChildByClass(RedLibCommandOpenBracket.class);
+  public List<RedLibCommandFlag> getFlagList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandFlag.class);
   }
 
 }

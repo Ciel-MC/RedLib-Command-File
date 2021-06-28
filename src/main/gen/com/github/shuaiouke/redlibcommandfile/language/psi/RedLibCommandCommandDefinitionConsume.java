@@ -5,10 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface RedLibCommandCommandDefinition extends PsiElement {
+public interface RedLibCommandCommandDefinitionConsume extends PsiElement {
 
   @Nullable
-  RedLibCommandArgs getArgs();
+  RedLibCommandArgsConsume getArgsConsume();
 
   @NotNull
   List<RedLibCommandBlankLine> getBlankLineList();
@@ -17,7 +17,7 @@ public interface RedLibCommandCommandDefinition extends PsiElement {
   RedLibCommandCloseBracket getCloseBracket();
 
   @NotNull
-  List<RedLibCommandLine> getLineList();
+  List<RedLibCommandLineConsume> getLineConsumeList();
 
   @NotNull
   RedLibCommandOpenBracket getOpenBracket();

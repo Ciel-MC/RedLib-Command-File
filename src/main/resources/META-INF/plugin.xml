@@ -14,12 +14,12 @@
                                implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandParserDefinition"/>
     </extensions>
 
-    <description>"Adds Support for RedLib's Command File"</description>
+    <description>Adds Grammar and Parsing for RedLib's Command File</description>
 
-    <version>0.1.1</version>
+    <version>0.2.0</version>
 
     <change-notes>
-        First major release!
+        Added arguments to the mix(Please report any bugs)
     </change-notes>
     <applicationListeners>
     </applicationListeners>

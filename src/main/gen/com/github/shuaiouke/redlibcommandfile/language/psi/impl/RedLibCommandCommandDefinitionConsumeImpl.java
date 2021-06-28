@@ -11,14 +11,14 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.shuaiouke.redlibcommandfile.language.psi.*;
 
-public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement implements RedLibCommandCommandDefinition {
+public class RedLibCommandCommandDefinitionConsumeImpl extends ASTWrapperPsiElement implements RedLibCommandCommandDefinitionConsume {
 
-  public RedLibCommandCommandDefinitionImpl(@NotNull ASTNode node) {
+  public RedLibCommandCommandDefinitionConsumeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RedLibCommandVisitor visitor) {
-    visitor.visitCommandDefinition(this);
+    visitor.visitCommandDefinitionConsume(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement imp
 
   @Override
   @Nullable
-  public RedLibCommandArgs getArgs() {
-    return findChildByClass(RedLibCommandArgs.class);
+  public RedLibCommandArgsConsume getArgsConsume() {
+    return findChildByClass(RedLibCommandArgsConsume.class);
   }
 
   @Override
@@ -47,8 +47,8 @@ public class RedLibCommandCommandDefinitionImpl extends ASTWrapperPsiElement imp
 
   @Override
   @NotNull
-  public List<RedLibCommandLine> getLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandLine.class);
+  public List<RedLibCommandLineConsume> getLineConsumeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RedLibCommandLineConsume.class);
   }
 
   @Override

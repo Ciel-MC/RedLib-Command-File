@@ -7,7 +7,27 @@ import com.intellij.psi.PsiElement;
 
 public class RedLibCommandVisitor extends PsiElementVisitor {
 
+  public void visitArg(@NotNull RedLibCommandArg o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArgs(@NotNull RedLibCommandArgs o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArgsConsume(@NotNull RedLibCommandArgsConsume o) {
+    visitPsiElement(o);
+  }
+
+  public void visitArgument(@NotNull RedLibCommandArgument o) {
+    visitPsiElement(o);
+  }
+
   public void visitAssertLine(@NotNull RedLibCommandAssertLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitBlankLine(@NotNull RedLibCommandBlankLine o) {
     visitPsiElement(o);
   }
 
@@ -15,7 +35,15 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCommandDef(@NotNull RedLibCommandCommandDef o) {
+    visitPsiElement(o);
+  }
+
   public void visitCommandDefinition(@NotNull RedLibCommandCommandDefinition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCommandDefinitionConsume(@NotNull RedLibCommandCommandDefinitionConsume o) {
     visitPsiElement(o);
   }
 
@@ -23,7 +51,19 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCommandPropertyConsume(@NotNull RedLibCommandCommandPropertyConsume o) {
+    visitPsiElement(o);
+  }
+
+  public void visitConsumingArg(@NotNull RedLibCommandConsumingArg o) {
+    visitPsiElement(o);
+  }
+
   public void visitContextLine(@NotNull RedLibCommandContextLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFlag(@NotNull RedLibCommandFlag o) {
     visitPsiElement(o);
   }
 
@@ -32,6 +72,14 @@ public class RedLibCommandVisitor extends PsiElementVisitor {
   }
 
   public void visitHookLine(@NotNull RedLibCommandHookLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLine(@NotNull RedLibCommandLine o) {
+    visitPsiElement(o);
+  }
+
+  public void visitLineConsume(@NotNull RedLibCommandLineConsume o) {
     visitPsiElement(o);
   }
 

@@ -20,11 +20,23 @@
 
 root ::= root_item*
 
-private root_item ::= (CommandDefinition)
+private root_item ::= (CommandDef)
 
-CommandDefinition ::= commandname (aliasseparator alias)* (SPACE|newline)* Open_Bracket (CommandProperty | CommandDefinition | newline)* Close_Bracket
+CommandDef ::= CommandDefinition | CommandDefinition_Consume
+
+CommandDefinition ::= SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
+
+CommandDefinition_Consume ::= SPACE* commandname (aliasseparator alias)* (SPACE Args_Consume)? newline? Open_Bracket (Line_Consume | Blank_Line)* Close_Bracket
+
+Line ::= CommandProperty | CommandDef
+
+Line_Consume ::= CommandProperty_Consume | CommandDef
+
+Blank_Line ::= newline
 
 CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine) newline
+
+CommandProperty_Consume ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine) newline
 
 //Help is a line for defining a command's subcommand "help"
 HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
@@ -45,5 +57,18 @@ ContextLine ::= context separator contextname (SPACE contextname) {pin=2}
 
 AssertLine ::= assert separator assertname (SPACE assertname) {pin=2}
 
-Open_Bracket ::= OBRACKET newline
-Close_Bracket ::= '}' (newline|<<eof>>)
+Open_Bracket ::= SPACE* OBRACKET newline
+Close_Bracket ::= SPACE* '}' (newline|<<eof>>)
+
+Args_Consume ::= Arg* ConsumingArg (ARG_TYPE? Flag (newline | SPACE))*
+
+Args ::= Arg*
+
+Arg ::= ((ARG_TYPE? Flag) | (ARG_TYPE Argument)) (newline | SPACE)
+
+ConsumingArg ::= ARG_TYPE_CONSUME Argument (newline | SPACE)
+
+Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+
+Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)? ))?
+
