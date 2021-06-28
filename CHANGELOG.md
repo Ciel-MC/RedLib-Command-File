@@ -2,6 +2,7 @@
 
 # RedLib-Command-File Changelog
 
+## [Unreleased]
 ## [0.2.0]
 - Added command arguments
 - Still cryptic prompt messages
