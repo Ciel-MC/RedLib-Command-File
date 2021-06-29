@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.3]
 - Added comments and their syntax highlighting
 ## [0.2.2]
 - Added syntax highlighting
