@@ -12,15 +12,11 @@
     elementTypeClass="com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandElementType"
     tokenTypeClass="com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandTokenType"
 
-    tokens=[
-        comment='#'
-    ]
-
 }
 
 root ::= root_item*
 
-private root_item ::= (CommandDef)
+private root_item ::= (CommandDef) | COMMENT
 
 CommandDef ::= CommandDefinition | CommandDefinition_Consume
 
@@ -32,7 +28,7 @@ Line ::= CommandProperty | CommandDef
 
 Line_Consume ::= CommandProperty_Consume | CommandDef
 
-Blank_Line ::= newline
+Blank_Line ::= (SPACE* newline) | COMMENT
 
 CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HelpMsgLine) newline
 
@@ -60,7 +56,7 @@ ContextLine ::= context separator contextname (SPACE contextname) {pin=2}
 AssertLine ::= assert separator assertname (SPACE assertname) {pin=2}
 
 Open_Bracket ::= SPACE* OBRACKET newline
-Close_Bracket ::= SPACE* '}' (newline|<<eof>>)
+Close_Bracket ::= SPACE* CBRACKET (newline|<<eof>>)
 
 Args_Consume ::= Arg* ConsumingArg (ARG_TYPE? Flag (newline | SPACE))*
 

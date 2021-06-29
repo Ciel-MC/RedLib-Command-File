@@ -1,7 +1,7 @@
 package com.github.shuaiouke.redlibcommandfile.language;
 
 import com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandTypes;import com.intellij.lexer.FlexLexer;
-import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.IElementType;import org.apache.xmlbeans.XmlCursor;
 
 import static com.intellij.psi.TokenType.BAD_CHARACTER;
 import static com.intellij.psi.TokenType.WHITE_SPACE;
@@ -22,12 +22,12 @@ import static com.github.shuaiouke.redlibcommandfile.language.psi.RedLibCommandT
 %type IElementType
 %unicode
 
+COMMENT="//".*
 NOSHOWTYPE=\*
 NOREQ=\?
 NOSHOWTYPENOREQ=\*\?|\?\*
 CRLF=\R
 QUOTE=([^\(\)\\])*
-HELPMESSAGE=([^\n])*
 ARG_TYPE_CONSUME=[\w\d][\w\d\-]*("..."|"[]")\:
 VAR_TYPE=\w+\:
 DASH=\-+
@@ -37,6 +37,7 @@ NEWLINE=[\r\n]
 WHITE_SPACE=[\ \n\t\f]
 SPACE=\s
 EOL=\$
+HELPMESSAGE=([^\n])*
 
 %state COMMAND
 %state NOARG
@@ -64,9 +65,11 @@ EOL=\$
     "postarg" {yybegin(NOARG);return POSTARG;}
     "context" {yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;}
     "assert" {yybegin(ASSERT);return RedLibCommandTypes.ASSERT;}
+    "}" {return CBRACKET;}
     {NEWLINE} {return NEWLINE;}
     {SPACE} {return SPACE;}
     {WORD} {yybegin(COMMAND);return COMMANDNAME;}
+    {COMMENT} {return COMMENT;}
 }
 
 <NOARG> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
@@ -174,4 +177,4 @@ EOL=\$
     {SPACE} {return SPACE;}
 }
 
-[^] { return BAD_CHARACTER; }
+[^] {return COMMENT;}

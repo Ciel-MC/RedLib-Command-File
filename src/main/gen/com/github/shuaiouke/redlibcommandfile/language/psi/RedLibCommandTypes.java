@@ -45,9 +45,10 @@ public interface RedLibCommandTypes {
   IElementType BOTHMODIFIERS = new RedLibCommandTokenType("bothmodifiers");
   IElementType BRACKET_CLOSE = new RedLibCommandTokenType("BRACKET_CLOSE");
   IElementType BRACKET_OPEN = new RedLibCommandTokenType("BRACKET_OPEN");
+  IElementType CBRACKET = new RedLibCommandTokenType("CBRACKET");
   IElementType COMMA = new RedLibCommandTokenType("COMMA");
   IElementType COMMANDNAME = new RedLibCommandTokenType("commandname");
-  IElementType COMMENT = new RedLibCommandTokenType("#");
+  IElementType COMMENT = new RedLibCommandTokenType("COMMENT");
   IElementType CONTEXT = new RedLibCommandTokenType("context");
   IElementType CONTEXTNAME = new RedLibCommandTokenType("contextname");
   IElementType DASHES = new RedLibCommandTokenType("DASHES");

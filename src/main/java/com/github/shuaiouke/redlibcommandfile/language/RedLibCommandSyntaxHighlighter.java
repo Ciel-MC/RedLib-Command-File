@@ -23,11 +23,14 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("REDLIB_ARG_NAME",DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey ARG_TYPE =
             createTextAttributesKey("REDLIB_ARG_TYPE",DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey COMMENT_INVALID_LINE =
+            createTextAttributesKey("REDLIB_INVALID",DefaultLanguageHighlighterColors.LINE_COMMENT);
 
     private static final TextAttributesKey[] COMMAND_NAME_KEYS = new TextAttributesKey[]{COMMAND_NAME};
     private static final TextAttributesKey[] TAG_KEYS = new TextAttributesKey[]{TAG};
     private static final TextAttributesKey[] ARG_NAME_KEYS = new TextAttributesKey[]{ARG_NAME};
     private static final TextAttributesKey[] ARG_TYPE_KEYS = new TextAttributesKey[]{ARG_TYPE};
+    private static final TextAttributesKey[] INVALID_KEYS = new TextAttributesKey[]{COMMENT_INVALID_LINE};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
     @Override
@@ -60,7 +63,10 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
         }else if(tokenType.equals(RedLibCommandTypes.ARG_TYPE))
         {
             return ARG_TYPE_KEYS;
-        }else {
+        }else if(tokenType.equals(RedLibCommandTypes.COMMENT))  {
+            return INVALID_KEYS;
+        }else
+        {
             return EMPTY_KEYS;
         }
     }
