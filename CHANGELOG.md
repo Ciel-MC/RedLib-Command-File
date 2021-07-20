@@ -3,6 +3,9 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.5]
+- Fixed default value not being able to be empty
+## [0.2.4]
 - Added comments and their syntax highlighting
 ## [0.2.2]
 - Added syntax highlighting

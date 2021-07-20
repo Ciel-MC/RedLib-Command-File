@@ -151,6 +151,9 @@ HELPMESSAGE=([^\n])*
 <USER> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 <USER> {SPACE} {yybegin(USERVALUE);return SEPARATOR;}
 <USERVALUE> {
+    "player" {return PLAYER;}
+    "console" {return CONSOLE;}
+    "everyone" {return EVERYONE;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
 }
 

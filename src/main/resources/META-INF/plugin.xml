@@ -19,7 +19,7 @@
 
     <description>Adds Grammar and Parsing for RedLib's Command File</description>
 
-    <version>0.2.3</version>
+    <version>0.2.5</version>
 
     <change-notes>
         Added syntax highlighting

@@ -175,7 +175,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)? ))?
+  // ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
   public static boolean Argument(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument")) return false;
     if (!nextTokenIs(b, ARG_NAME)) return false;
@@ -187,14 +187,14 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)? ))?
+  // (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
   private static boolean Argument_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument_1")) return false;
     Argument_1_0(b, l + 1);
     return true;
   }
 
-  // noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)? )
+  // noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? )
   private static boolean Argument_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument_1_0")) return false;
     boolean r;
@@ -205,7 +205,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+  // (notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
   private static boolean Argument_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument_1_0_1")) return false;
     boolean r;
@@ -225,21 +225,30 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+  // ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
   private static boolean Argument_1_0_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument_1_0_1_1")) return false;
     Argument_1_0_1_1_0(b, l + 1);
     return true;
   }
 
-  // BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE
+  // BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE
   private static boolean Argument_1_0_1_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Argument_1_0_1_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, BRACKET_OPEN, DEFAULT_VALUE, BRACKET_CLOSE);
+    r = consumeToken(b, BRACKET_OPEN);
+    r = r && Argument_1_0_1_1_0_1(b, l + 1);
+    r = r && consumeToken(b, BRACKET_CLOSE);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // DEFAULT_VALUE?
+  private static boolean Argument_1_0_1_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Argument_1_0_1_1_0_1")) return false;
+    consumeToken(b, DEFAULT_VALUE);
+    return true;
   }
 
   /* ********************************************************** */
@@ -670,7 +679,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+  // DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
   public static boolean Flag(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Flag")) return false;
     if (!nextTokenIs(b, DASHES)) return false;
@@ -712,21 +721,30 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+  // (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
   private static boolean Flag_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Flag_4")) return false;
     Flag_4_0(b, l + 1);
     return true;
   }
 
-  // BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE
+  // BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE
   private static boolean Flag_4_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Flag_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, BRACKET_OPEN, DEFAULT_VALUE, BRACKET_CLOSE);
+    r = consumeToken(b, BRACKET_OPEN);
+    r = r && Flag_4_0_1(b, l + 1);
+    r = r && consumeToken(b, BRACKET_CLOSE);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // DEFAULT_VALUE?
+  private static boolean Flag_4_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Flag_4_0_1")) return false;
+    consumeToken(b, DEFAULT_VALUE);
+    return true;
   }
 
   /* ********************************************************** */
@@ -932,7 +950,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // user separator ('player' | 'console' | 'everyone')
+  // user separator (player | console | everyone)
   public static boolean UserLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "UserLine")) return false;
     if (!nextTokenIs(b, USER)) return false;
@@ -945,13 +963,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r || p;
   }
 
-  // 'player' | 'console' | 'everyone'
+  // player | console | everyone
   private static boolean UserLine_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "UserLine_2")) return false;
     boolean r;
-    r = consumeToken(b, "player");
-    if (!r) r = consumeToken(b, "console");
-    if (!r) r = consumeToken(b, "everyone");
+    r = consumeToken(b, PLAYER);
+    if (!r) r = consumeToken(b, CONSOLE);
+    if (!r) r = consumeToken(b, EVERYONE);
     return r;
   }
 

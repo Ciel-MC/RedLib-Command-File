@@ -41,7 +41,7 @@ HelpMsgLine ::= helpmsg separator helpmsgkey (SPACE helpmessagekey)* {pin=2}
 
 PermissionLine ::= permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
 
-UserLine ::= user separator ('player' | 'console' | 'everyone') {pin=2}
+UserLine ::= user separator (player | console | everyone) {pin=2}
 
 HookLine ::= hook separator hookname {pin=2}
 
@@ -66,7 +66,7 @@ Arg ::= ((ARG_TYPE? Flag) | (ARG_TYPE Argument)) (newline | SPACE)
 
 ConsumingArg ::= ARG_TYPE_CONSUME Argument (newline | SPACE)
 
-Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)?
+Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
 
-Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE BRACKET_CLOSE)? ))?
+Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
 

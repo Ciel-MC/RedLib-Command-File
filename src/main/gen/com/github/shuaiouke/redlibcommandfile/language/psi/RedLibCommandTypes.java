@@ -49,11 +49,13 @@ public interface RedLibCommandTypes {
   IElementType COMMA = new RedLibCommandTokenType("COMMA");
   IElementType COMMANDNAME = new RedLibCommandTokenType("commandname");
   IElementType COMMENT = new RedLibCommandTokenType("COMMENT");
+  IElementType CONSOLE = new RedLibCommandTokenType("console");
   IElementType CONTEXT = new RedLibCommandTokenType("context");
   IElementType CONTEXTNAME = new RedLibCommandTokenType("contextname");
   IElementType DASHES = new RedLibCommandTokenType("DASHES");
   IElementType DEFAULT_VALUE = new RedLibCommandTokenType("DEFAULT_VALUE");
   IElementType DOT = new RedLibCommandTokenType("DOT");
+  IElementType EVERYONE = new RedLibCommandTokenType("everyone");
   IElementType FLAG_MODIFIER = new RedLibCommandTokenType("FLAG_MODIFIER");
   IElementType FLAG_NAME = new RedLibCommandTokenType("FLAG_NAME");
   IElementType HELP = new RedLibCommandTokenType("help");
@@ -71,6 +73,7 @@ public interface RedLibCommandTypes {
   IElementType OBRACKET = new RedLibCommandTokenType("OBRACKET");
   IElementType PERMISSION = new RedLibCommandTokenType("permission");
   IElementType PERMISSION_VALUE = new RedLibCommandTokenType("PERMISSION_VALUE");
+  IElementType PLAYER = new RedLibCommandTokenType("player");
   IElementType POSTARG = new RedLibCommandTokenType("postarg");
   IElementType SEPARATOR = new RedLibCommandTokenType("separator");
   IElementType SPACE = new RedLibCommandTokenType("SPACE");
