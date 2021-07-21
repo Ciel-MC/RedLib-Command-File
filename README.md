@@ -6,7 +6,7 @@
 
 ## Description
 <!-- Plugin description -->
-Adds support for RedLib's command file
+Adds grammar checking and syntax highlighting for the command file use by RedLib(https://github.com/Redempt/RedLib) by Redempt to Intellij IDEA
 <!-- Plugin description end -->
 
 ## Installation
