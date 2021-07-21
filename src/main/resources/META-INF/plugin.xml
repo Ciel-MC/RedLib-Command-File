@@ -17,7 +17,7 @@
         <colorSettingsPage implementation="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
     </extensions>
 
-    <description>Adds grammar checking and syntax highlighting for the command file use by RedLib(https://github.com/Redempt/RedLib) to Intellij IDEA</description>
+    <description>Adds grammar checking and syntax highlighting for the command file use by RedLib(https://github.com/Redempt/RedLib) by Redempt to Intellij IDEA</description>
 
     <version>0.2.5</version>
 
