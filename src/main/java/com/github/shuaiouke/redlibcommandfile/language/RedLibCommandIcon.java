@@ -6,6 +6,6 @@ import javax.swing.*;
 
 public class RedLibCommandIcon{
 
-    public static final Icon FILE = IconLoader.getIcon("icons/Icon.png");
+    public static final Icon FILE = IconLoader.getIcon("icons/Icon.png",RedLibCommandIcon.class);
 
 }
