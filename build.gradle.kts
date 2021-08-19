@@ -118,4 +118,3 @@ tasks {
 }
 
 apply(plugin = "org.jetbrains.grammarkit")
-
