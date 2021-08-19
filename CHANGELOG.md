@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.9]
 - Added brace matching
 ## [0.2.6]
 ## [0.2.5]
