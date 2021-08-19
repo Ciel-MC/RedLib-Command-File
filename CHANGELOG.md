@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Added brace matching
 ## [0.2.6]
 ## [0.2.5]
 - Fixed default value not being able to be empty

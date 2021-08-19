@@ -15,6 +15,8 @@
         <lang.syntaxHighlighterFactory language="RLCF"
                                        implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandSyntaxHighlighterFactory"/>
         <colorSettingsPage implementation="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
+        <lang.braceMatcher language="RLCF"
+                           implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandBraceMatcher"/>
     </extensions>
     <applicationListeners>
     </applicationListeners>
