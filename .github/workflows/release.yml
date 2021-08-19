@@ -11,7 +11,7 @@ jobs:
   # Prepare and publish the plugin to the Marketplace repository
   release:
     name: Publish Plugin
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
 
       # Setup Java 11 environment for the next steps
@@ -37,7 +37,7 @@ jobs:
   changelog:
     name: Update Changelog
     needs: release
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
 
       # Setup Java 11 environment for the next steps
