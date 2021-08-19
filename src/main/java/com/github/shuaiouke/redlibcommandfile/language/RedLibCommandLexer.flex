@@ -111,6 +111,7 @@ HELPMESSAGE=([^\n])*
 <ARG>
 {
     "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
+    ")" {yybegin(ARGS);return BRACKET_CLOSE;}
     {NOSHOWTYPE} {return NOSHOWTYPE;}
     {NOREQ} {return NOTREQUIRED;}
     {NOSHOWTYPENOREQ} {return BOTHMODIFIERS;}

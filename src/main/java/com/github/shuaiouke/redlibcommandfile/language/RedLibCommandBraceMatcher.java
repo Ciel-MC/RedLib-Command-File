@@ -17,7 +17,7 @@ import static com.intellij.psi.CustomHighlighterTokenType.*;
 
 public class RedLibCommandBraceMatcher implements PairedBraceMatcher {
     private static final BracePair[] PAIRS = new BracePair[]{
-            new BracePair(BRACKET_OPEN, BRACKET_CLOSE, true),
+            new BracePair(BRACKET_OPEN, new IElementType("}", null), false),
             new BracePair(OBRACKET, CBRACKET, true),
     };
 
