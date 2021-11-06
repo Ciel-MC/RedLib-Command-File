@@ -26,7 +26,8 @@ jobs:
   # Run Gradle Wrapper Validation Action to verify the wrapper's checksum
   gradleValidation:
     name: Gradle Wrapper
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
 
       # Check out current repository
@@ -41,7 +42,8 @@ jobs:
   test:
     name: Test
     needs: gradleValidation
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
 
       # Setup Java 11 environment for the next steps
@@ -82,7 +84,8 @@ jobs:
   build:
     name: Build
     needs: test
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: ubuntu-latest
     outputs:
       name: ${{ steps.properties.outputs.name }}
       version: ${{ steps.properties.outputs.version }}
@@ -150,7 +153,8 @@ jobs:
   verify:
     name: Verify
     needs: build
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
 
       # Setup Java 11 environment for the next steps
@@ -206,7 +210,8 @@ jobs:
     name: Release Draft
     if: github.event_name != 'pull_request'
     needs: [build, verify]
-    runs-on: self-hosted
+#    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
 
       # Check out current repository
