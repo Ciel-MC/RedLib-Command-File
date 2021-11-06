@@ -346,14 +346,14 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CommandDefinition | CommandDefinition_Consume
+  // CommandDefinition | CommandDefinition_Consume | newline
   public static boolean CommandDef(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDef")) return false;
-    if (!nextTokenIs(b, "<command def>", COMMANDNAME, SPACE)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, COMMAND_DEF, "<command def>");
     r = CommandDefinition(b, l + 1);
     if (!r) r = CommandDefinition_Consume(b, l + 1);
+    if (!r) r = consumeToken(b, NEWLINE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

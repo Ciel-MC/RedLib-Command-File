@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Fixed a bug where you can't have empty lines between commands
 - Added brace matching
 ## [0.2.6]
 ## [0.2.5]

@@ -18,7 +18,7 @@ root ::= root_item*
 
 private root_item ::= (CommandDef) | COMMENT
 
-CommandDef ::= CommandDefinition | CommandDefinition_Consume
+CommandDef ::= CommandDefinition | CommandDefinition_Consume | newline
 
 CommandDefinition ::= SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
 
