@@ -3,6 +3,15 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Disabled postarg for base commands and the children of consuming commands
+- Optimized file size
+- Added support for consuming args with constraints
+- Added support for consuming args with constraints with default values
+- Added support for constraints
+- Fixed a bug where it would allow consuming arguments after one non-consuming subcommand
+- Fixed a bug where context and assert would only accept 2 words and nothing else
+- Fixed a bug where you can't have postargs in the command if it has a consuming argument
+## [0.2.10]
 - Fixed a bug where you can't have empty lines between commands
 ## [0.2.9]
 - Added brace matching

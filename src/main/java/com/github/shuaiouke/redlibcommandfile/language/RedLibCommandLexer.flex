@@ -27,10 +27,12 @@ NOSHOWTYPE=\*
 NOREQ=\?
 NOSHOWTYPENOREQ=\*\?|\?\*
 CRLF=\R
-QUOTE=([^\(\)\\])*
-ARG_TYPE_CONSUME=[\w\d][\w\d\-]*("..."|"[]")\:
-VAR_TYPE=\w+\:
-DASH=\-+
+ESCAPED_QUOTE=\\[^\n]
+UNESCAPED_QUOTE=[^\n()]
+QUOTE=({ESCAPED_QUOTE}|{UNESCAPED_QUOTE})*
+CONSUME_TOKEN="..."|"[]"
+VAR_TYPE=\w+
+DASH=-+
 WORD=[\w\d][\w\d\-]*
 ALPHA=\w+
 NEWLINE=[\r\n]
@@ -38,6 +40,10 @@ WHITE_SPACE=[\ \n\t\f]
 SPACE=\s
 EOL=\$
 HELPMESSAGE=([^\n])*
+ESCAPED_CHAR=(\\[^\n])
+UNESCAPED_CHAR=[^\n<>]
+CONSTRAINT=\<({UNESCAPED_CHAR}|{ESCAPED_CHAR})*\>
+FLAG_COLON=\:-+
 
 %state COMMAND
 %state NOARG
@@ -84,15 +90,16 @@ HELPMESSAGE=([^\n])*
 
 <ARGS>
 {
+    ":" {yybegin(ARG);return COLON;}
+    {FLAG_COLON} {yybegin(FLAG);return FLAG_COLON;}
     //skip to flag section
     {DASH} {yybegin(FLAG);return DASHES;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
     "{" {yybegin(YYINITIAL);return OBRACKET;}
     {SPACE} {return SPACE;}
-    {ARG_TYPE_CONSUME} {return ARG_TYPE_CONSUME;}
     {VAR_TYPE} {return ARG_TYPE;}
-    //Jump to arguments section
-    {WORD} {yybegin(ARG);return ARG_NAME;}
+    {CONSUME_TOKEN} {return CONSUME_TOKEN;}
+    {CONSTRAINT} {return CONSTRAINT;}
 }
 
 <FLAG>
@@ -100,7 +107,6 @@ HELPMESSAGE=([^\n])*
     "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
     //For aliases
     "," {return COMMA;}
-    {DASH} {return DASHES;}
     {SPACE} {yybegin(ARGS);return SPACE;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
     //Report a flag name
@@ -117,6 +123,7 @@ HELPMESSAGE=([^\n])*
     {NOSHOWTYPENOREQ} {return BOTHMODIFIERS;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
     {SPACE} {yybegin(ARGS);return SPACE;}
+    {WORD} {return ARG_NAME;}
 }
 
 <DEFAULTVALUE>
@@ -181,4 +188,4 @@ HELPMESSAGE=([^\n])*
     {SPACE} {return SPACE;}
 }
 
-[^] {return COMMENT;}
+[^] {return BAD_CHARACTER;}

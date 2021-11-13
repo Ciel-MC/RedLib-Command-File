@@ -16,57 +16,79 @@
 
 root ::= root_item*
 
-private root_item ::= (CommandDef) | COMMENT
+private root_item ::= (CommandDef_Base) | COMMENT
 
-CommandDef ::= CommandDefinition | CommandDefinition_Consume | newline
+private CommandDef_Base ::= CommandDefinition_Base | CommandDefinition_Consuming_Base
 
-CommandDefinition ::= SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
+private CommandDef ::= CommandDefinition | CommandDefinition_Consuming | newline
 
-CommandDefinition_Consume ::= SPACE* commandname (aliasseparator alias)* (SPACE Args_Consume)? newline? Open_Bracket (Line_Consume | Blank_Line)* Close_Bracket
+private CommandDef_Consumed ::= CommandDefinition_Consumed | newline
 
-Line ::= CommandProperty | CommandDef
+private CommandDefinition ::= SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
 
-Line_Consume ::= CommandProperty_Consume | CommandDef
+private CommandDefinition_Consuming ::= SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket
 
-Blank_Line ::= (SPACE* newline) | COMMENT
+private CommandDefinition_Base ::= SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket
 
-CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HelpMsgLine) newline
+private CommandDefinition_Consuming_Base ::= SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket
 
-CommandProperty_Consume ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
+private CommandDefinition_Consumed ::= SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket
+
+private Line ::= CommandProperty | CommandDef
+
+private Line_Consumed ::= CommandProperty | CommandDef_Consumed
+
+private Line_Consumed_Recovering ::= CommandProperty_Consumed | CommandDef
+
+private Line_Base ::= CommandProperty_Base | CommandDef
+
+private Line_Base_Consuming ::= CommandProperty_Base | CommandDefinition_Consumed
+
+private Blank_Line ::= (SPACE* newline) | COMMENT
+
+private CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HelpMsgLine) newline
+
+private CommandProperty_Consumed ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
+
+private CommandProperty_Base ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
 
 //Help is a line for defining a command's subcommand "help"
-HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
+private HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
 
-HelpMsgLine ::= helpmsg separator helpmsgkey (SPACE helpmessagekey)* {pin=2}
+private HelpMsgLine ::= helpmsg separator helpmsgkey (SPACE helpmessagekey)* {pin=2}
 
-PermissionLine ::= permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
+private PermissionLine ::= permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)* {pin=2}
 
-UserLine ::= user separator (player | console | everyone) {pin=2}
+private UserLine ::= user separator (player | console | everyone) {pin=2}
 
-HookLine ::= hook separator hookname {pin=2}
+private HookLine ::= hook separator hookname {pin=2}
 
-NoHelpLine ::= nohelp
+private NoHelpLine ::= nohelp
 
-NoTabLine ::= notab
+private NoTabLine ::= notab
 
-PostArgLine ::= postarg
+private PostArgLine ::= postarg
 
-ContextLine ::= context separator contextname (SPACE contextname) {pin=2}
+private ContextLine ::= context separator contextname (SPACE contextname)* {pin=2}
 
-AssertLine ::= assert separator assertname (SPACE assertname) {pin=2}
+private AssertLine ::= assert separator assertname (SPACE assertname)* {pin=2}
 
-Open_Bracket ::= SPACE* OBRACKET newline
-Close_Bracket ::= SPACE* CBRACKET (newline|<<eof>>)
+private Open_Bracket ::= SPACE* OBRACKET newline
+private Close_Bracket ::= SPACE* CBRACKET (newline|<<eof>>)
 
-Args_Consume ::= Arg* ConsumingArg (ARG_TYPE? Flag (newline | SPACE))*
+//Args_Consume ::= Arg*
+private Args_Can_Consume ::= ConsumingArg*
 
-Args ::= Arg*
+private Args ::= Arg*
 
-Arg ::= ((ARG_TYPE? Flag) | (ARG_TYPE Argument)) (newline | SPACE)
+private Arg ::= (((ARG_TYPE CONSTRAINT? FLAG_COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | SPACE)
 
-ConsumingArg ::= ARG_TYPE_CONSUME Argument (newline | SPACE)
+private ConsumingArg ::= ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | SPACE)
 
-Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
+private Flag ::= FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
 
-Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
+private Argument ::= ARG_NAME (noshowtype | ((noshowtype) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
 
+private Consuming_Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
+
+//(CONSTRAINT_OPEN CONSTRAINT? CONSTRAINT_CLOSE)?

@@ -56,7 +56,7 @@ public class RedLibCommandParserDefinition implements ParserDefinition {
 
     @Override
     public @NotNull PsiElement createElement(ASTNode node) {
-        return RedLibCommandTypes.Factory.createElement(node);
+        return null;
     }
 
     @Override

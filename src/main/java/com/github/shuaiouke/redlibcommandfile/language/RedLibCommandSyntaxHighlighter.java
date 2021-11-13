@@ -25,6 +25,8 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("REDLIB_ARG_TYPE",DefaultLanguageHighlighterColors.KEYWORD);
     public static final TextAttributesKey COMMENT_INVALID_LINE =
             createTextAttributesKey("REDLIB_INVALID",DefaultLanguageHighlighterColors.LINE_COMMENT);
+    public static final TextAttributesKey IDENTIFIER =
+            createTextAttributesKey("REDLIB_VALID",DefaultLanguageHighlighterColors.IDENTIFIER);
 
     private static final TextAttributesKey[] COMMAND_NAME_KEYS = new TextAttributesKey[]{COMMAND_NAME};
     private static final TextAttributesKey[] TAG_KEYS = new TextAttributesKey[]{TAG};
@@ -32,6 +34,7 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] ARG_TYPE_KEYS = new TextAttributesKey[]{ARG_TYPE};
     private static final TextAttributesKey[] INVALID_KEYS = new TextAttributesKey[]{COMMENT_INVALID_LINE};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
+    private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
 
     @Override
     public @NotNull Lexer getHighlightingLexer() {
@@ -53,20 +56,22 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
                 tokenType.equals(RedLibCommandTypes.NOTAB) |
                 tokenType.equals(RedLibCommandTypes.POSTARG) |
                 tokenType.equals(RedLibCommandTypes.CONTEXT) |
-                tokenType.equals(RedLibCommandTypes.ASSERT)|
-                tokenType.equals(RedLibCommandTypes.ARG_TYPE_CONSUME)) {
+                tokenType.equals(RedLibCommandTypes.ASSERT)) {
             return TAG_KEYS;
         } else if (tokenType.equals(RedLibCommandTypes.DASHES) |
                 tokenType.equals(RedLibCommandTypes.ARG_NAME) |
-                tokenType.equals(RedLibCommandTypes.FLAG_NAME)) {
+                tokenType.equals(RedLibCommandTypes.FLAG_NAME)){
             return ARG_NAME_KEYS;
         }else if(tokenType.equals(RedLibCommandTypes.ARG_TYPE))
         {
             return ARG_TYPE_KEYS;
-        }else if(tokenType.equals(RedLibCommandTypes.COMMENT))  {
+        }else if(tokenType.equals(RedLibCommandTypes.COMMENT)) {
             return INVALID_KEYS;
-        }else
-        {
+        }else if(tokenType.equals(RedLibCommandTypes.CONSUME_TOKEN) |
+               tokenType.equals(RedLibCommandTypes.CONSTRAINT)
+        ){
+            return IDENTIFIER_KEYS;
+        }else {
             return EMPTY_KEYS;
         }
     }
