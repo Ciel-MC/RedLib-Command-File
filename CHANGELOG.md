@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.11]
 - Disabled postarg for base commands and the children of consuming commands
 - Optimized file size
 - Added support for consuming args with constraints
