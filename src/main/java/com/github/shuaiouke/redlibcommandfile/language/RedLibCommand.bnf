@@ -46,11 +46,11 @@ private Line_Base_Consuming ::= CommandProperty_Base | CommandDefinition_Consume
 
 private Blank_Line ::= (SPACE* newline) | COMMENT
 
-private CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HelpMsgLine) newline
+private CommandProperty ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HideSubLine|HelpMsgLine) newline
 
-private CommandProperty_Consumed ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
+private CommandProperty_Consumed ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
 
-private CommandProperty_Base ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HelpMsgLine) newline
+private CommandProperty_Base ::= (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
 
 //Help is a line for defining a command's subcommand "help"
 private HelpLine ::= help separator helpmessage (SPACE helpmessage)* {pin=2}
@@ -72,6 +72,8 @@ private PostArgLine ::= postarg
 private ContextLine ::= context separator contextname (SPACE contextname)* {pin=2}
 
 private AssertLine ::= assert separator assertname (SPACE assertname)* {pin=2}
+
+private HideSubLine ::= hidesub
 
 private Open_Bracket ::= SPACE* OBRACKET newline
 private Close_Bracket ::= SPACE* CBRACKET (newline|<<eof>>)

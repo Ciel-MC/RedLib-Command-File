@@ -39,6 +39,7 @@ public interface RedLibCommandTypes {
   IElementType HELPMESSAGEKEY = new RedLibCommandTokenType("helpmessagekey");
   IElementType HELPMSG = new RedLibCommandTokenType("helpmsg");
   IElementType HELPMSGKEY = new RedLibCommandTokenType("helpmsgkey");
+  IElementType HIDESUB = new RedLibCommandTokenType("hidesub");
   IElementType HOOK = new RedLibCommandTokenType("hook");
   IElementType HOOKNAME = new RedLibCommandTokenType("hookname");
   IElementType NEWLINE = new RedLibCommandTokenType("newline");

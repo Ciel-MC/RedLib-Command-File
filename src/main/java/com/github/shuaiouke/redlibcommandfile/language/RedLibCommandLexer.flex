@@ -69,6 +69,7 @@ FLAG_COLON=\:-+
     "nohelp" {yybegin(NOARG);return NOHELP;}
     "notab" {yybegin(NOARG);return NOTAB;}
     "postarg" {yybegin(NOARG);return POSTARG;}
+    "hidesub" {yybegin(NOARG);return HIDESUB;}
     "context" {yybegin(CONTEXT);return RedLibCommandTypes.CONTEXT;}
     "assert" {yybegin(ASSERT);return RedLibCommandTypes.ASSERT;}
     "}" {return CBRACKET;}
