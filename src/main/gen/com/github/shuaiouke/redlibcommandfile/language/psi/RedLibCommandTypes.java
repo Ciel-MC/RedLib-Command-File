@@ -31,7 +31,6 @@ public interface RedLibCommandTypes {
   IElementType DEFAULT_VALUE = new RedLibCommandTokenType("DEFAULT_VALUE");
   IElementType DOT = new RedLibCommandTokenType("DOT");
   IElementType EVERYONE = new RedLibCommandTokenType("everyone");
-  IElementType FLAG_COLON = new RedLibCommandTokenType("FLAG_COLON");
   IElementType FLAG_MODIFIER = new RedLibCommandTokenType("FLAG_MODIFIER");
   IElementType FLAG_NAME = new RedLibCommandTokenType("FLAG_NAME");
   IElementType HELP = new RedLibCommandTokenType("help");

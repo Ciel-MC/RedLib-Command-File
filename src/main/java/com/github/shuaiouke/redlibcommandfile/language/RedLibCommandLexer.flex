@@ -58,6 +58,7 @@ FLAG_COLON=\:-+
 %state FLAG
 %state ARG
 %state DEFAULTVALUE
+%state POSTARGTYPE
 
 %%
 <YYINITIAL> {
@@ -91,8 +92,7 @@ FLAG_COLON=\:-+
 
 <ARGS>
 {
-    ":" {yybegin(ARG);return COLON;}
-    {FLAG_COLON} {yybegin(FLAG);return FLAG_COLON;}
+    ":" {yybegin(POSTARGTYPE);return COLON;}
     //skip to flag section
     {DASH} {yybegin(FLAG);return DASHES;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
@@ -103,6 +103,13 @@ FLAG_COLON=\:-+
     {CONSTRAINT} {return CONSTRAINT;}
 }
 
+<POSTARGTYPE>
+ {
+    {WORD} {yybegin(ARG);return ARG_NAME;}
+    {DASH} {yybegin(FLAG);return DASHES;}
+    {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
+ }
+
 <FLAG>
 {
     "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
@@ -110,6 +117,7 @@ FLAG_COLON=\:-+
     "," {return COMMA;}
     {SPACE} {yybegin(ARGS);return SPACE;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
+    {DASH} {return DASHES;}
     //Report a flag name
     {WORD} {return FLAG_NAME;}
     {NOSHOWTYPE} {return FLAG_MODIFIER;}

@@ -83,11 +83,11 @@ private Args_Can_Consume ::= ConsumingArg*
 
 private Args ::= Arg*
 
-private Arg ::= (((ARG_TYPE CONSTRAINT? FLAG_COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | SPACE)
+private Arg ::= (((ARG_TYPE CONSTRAINT? COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | SPACE)
 
 private ConsumingArg ::= ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | SPACE)
 
-private Flag ::= FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
+private Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
 
 private Argument ::= ARG_NAME (noshowtype | ((noshowtype) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
 

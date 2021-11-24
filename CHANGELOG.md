@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Fixed flags being broken from adding constraints
 - Added support for the `hidesub` tag
 ## [0.2.11]
 - Disabled postarg for base commands and the children of consuming commands
