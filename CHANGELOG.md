@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.12]
 - Fixed flags being broken from adding constraints
 - Added support for the `hidesub` tag
 ## [0.2.11]
