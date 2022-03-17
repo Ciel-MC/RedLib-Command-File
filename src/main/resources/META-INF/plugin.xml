@@ -17,6 +17,8 @@
         <colorSettingsPage implementation="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
         <lang.braceMatcher language="RLCF"
                            implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandBraceMatcher"/>
+        <lang.commenter language="RLCF"
+                        implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandCommenter"/>
     </extensions>
     <applicationListeners>
     </applicationListeners>

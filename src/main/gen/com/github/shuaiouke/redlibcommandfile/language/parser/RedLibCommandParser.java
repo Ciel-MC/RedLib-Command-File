@@ -36,7 +36,27 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (((ARG_TYPE CONSTRAINT? COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | SPACE)
+  // alias|help|permission|user|hook|context|assert|nohelp|notab|postarg|hidesub|helpmsg
+  static boolean Alias(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "Alias")) return false;
+    boolean r;
+    r = consumeToken(b, ALIAS);
+    if (!r) r = consumeToken(b, HELP);
+    if (!r) r = consumeToken(b, PERMISSION);
+    if (!r) r = consumeToken(b, USER);
+    if (!r) r = consumeToken(b, HOOK);
+    if (!r) r = consumeToken(b, CONTEXT);
+    if (!r) r = consumeToken(b, ASSERT);
+    if (!r) r = consumeToken(b, NOHELP);
+    if (!r) r = consumeToken(b, NOTAB);
+    if (!r) r = consumeToken(b, POSTARG);
+    if (!r) r = consumeToken(b, HIDESUB);
+    if (!r) r = consumeToken(b, HELPMSG);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (((ARG_TYPE CONSTRAINT? COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | space)
   static boolean Arg(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Arg")) return false;
     if (!nextTokenIs(b, "", ARG_TYPE, DASHES)) return false;
@@ -116,7 +136,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // newline | SPACE
+  // newline | space
   private static boolean Arg_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Arg_1")) return false;
     boolean r;
@@ -218,20 +238,20 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assert separator assertname (SPACE assertname)*
+  // assert space assertname (space assertname)*
   static boolean AssertLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AssertLine")) return false;
     if (!nextTokenIs(b, ASSERT)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, ASSERT, SEPARATOR, ASSERTNAME);
+    r = consumeTokens(b, 2, ASSERT, SPACE, ASSERTNAME);
     p = r; // pin = 2
     r = r && AssertLine_3(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (SPACE assertname)*
+  // (space assertname)*
   private static boolean AssertLine_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AssertLine_3")) return false;
     while (true) {
@@ -242,7 +262,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // SPACE assertname
+  // space assertname
   private static boolean AssertLine_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "AssertLine_3_0")) return false;
     boolean r;
@@ -253,7 +273,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SPACE* newline) | COMMENT
+  // (space* newline) | COMMENT
   static boolean Blank_Line(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Blank_Line")) return false;
     boolean r;
@@ -264,7 +284,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SPACE* newline
+  // space* newline
   private static boolean Blank_Line_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Blank_Line_0")) return false;
     boolean r;
@@ -275,7 +295,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SPACE*
+  // space*
   private static boolean Blank_Line_0_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Blank_Line_0_0")) return false;
     while (true) {
@@ -287,7 +307,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* CBRACKET (newline|<<eof>>)
+  // space* CBRACKET (newline|<<eof>>)
   static boolean Close_Bracket(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Close_Bracket")) return false;
     if (!nextTokenIs(b, "", CBRACKET, SPACE)) return false;
@@ -300,7 +320,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SPACE*
+  // space*
   private static boolean Close_Bracket_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Close_Bracket_0")) return false;
     while (true) {
@@ -334,13 +354,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // CommandDefinition_Base | CommandDefinition_Consuming_Base
+  // CommandDefinition_Base | CommandDefinition_Consuming_Base | newline
   static boolean CommandDef_Base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDef_Base")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
     boolean r;
     r = CommandDefinition_Base(b, l + 1);
     if (!r) r = CommandDefinition_Consuming_Base(b, l + 1);
+    if (!r) r = consumeToken(b, NEWLINE);
     return r;
   }
 
@@ -355,25 +375,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
+  // space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
   static boolean CommandDefinition(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = CommandDefinition_0(b, l + 1);
-    r = r && consumeToken(b, COMMANDNAME);
-    r = r && CommandDefinition_2(b, l + 1);
-    r = r && CommandDefinition_3(b, l + 1);
-    r = r && CommandDefinition_4(b, l + 1);
-    r = r && Open_Bracket(b, l + 1);
-    r = r && CommandDefinition_6(b, l + 1);
-    r = r && Close_Bracket(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    r = r && CommandName(b, l + 1);
+    p = r; // pin = CommandName
+    r = r && report_error_(b, CommandDefinition_2(b, l + 1));
+    r = p && report_error_(b, CommandDefinition_3(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_4(b, l + 1)) && r;
+    r = p && report_error_(b, Open_Bracket(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_6(b, l + 1)) && r;
+    r = p && Close_Bracket(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // SPACE*
+  // space*
   private static boolean CommandDefinition_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_0")) return false;
     while (true) {
@@ -384,7 +404,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (aliasseparator alias)*
+  // (comma Alias)*
   private static boolean CommandDefinition_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_2")) return false;
     while (true) {
@@ -395,24 +415,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // aliasseparator alias
+  // comma Alias
   private static boolean CommandDefinition_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ALIASSEPARATOR, ALIAS);
+    r = consumeToken(b, COMMA);
+    r = r && Alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (SPACE Args)?
+  // (space Args)?
   private static boolean CommandDefinition_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_3")) return false;
     CommandDefinition_3_0(b, l + 1);
     return true;
   }
 
-  // SPACE Args
+  // space Args
   private static boolean CommandDefinition_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_3_0")) return false;
     boolean r;
@@ -451,25 +472,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* commandname (aliasseparator alias)* (SPACE Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket
+  // space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket
   static boolean CommandDefinition_Base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = CommandDefinition_Base_0(b, l + 1);
-    r = r && consumeToken(b, COMMANDNAME);
-    r = r && CommandDefinition_Base_2(b, l + 1);
-    r = r && CommandDefinition_Base_3(b, l + 1);
-    r = r && CommandDefinition_Base_4(b, l + 1);
-    r = r && Open_Bracket(b, l + 1);
-    r = r && CommandDefinition_Base_6(b, l + 1);
-    r = r && Close_Bracket(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    r = r && CommandName(b, l + 1);
+    p = r; // pin = CommandName
+    r = r && report_error_(b, CommandDefinition_Base_2(b, l + 1));
+    r = p && report_error_(b, CommandDefinition_Base_3(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Base_4(b, l + 1)) && r;
+    r = p && report_error_(b, Open_Bracket(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Base_6(b, l + 1)) && r;
+    r = p && Close_Bracket(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // SPACE*
+  // space*
   private static boolean CommandDefinition_Base_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base_0")) return false;
     while (true) {
@@ -480,7 +501,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (aliasseparator alias)*
+  // (comma Alias)*
   private static boolean CommandDefinition_Base_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base_2")) return false;
     while (true) {
@@ -491,24 +512,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // aliasseparator alias
+  // comma Alias
   private static boolean CommandDefinition_Base_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ALIASSEPARATOR, ALIAS);
+    r = consumeToken(b, COMMA);
+    r = r && Alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (SPACE Args)?
+  // (space Args)?
   private static boolean CommandDefinition_Base_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base_3")) return false;
     CommandDefinition_Base_3_0(b, l + 1);
     return true;
   }
 
-  // SPACE Args
+  // space Args
   private static boolean CommandDefinition_Base_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Base_3_0")) return false;
     boolean r;
@@ -547,25 +569,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket
+  // space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket
   static boolean CommandDefinition_Consumed(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = CommandDefinition_Consumed_0(b, l + 1);
-    r = r && consumeToken(b, COMMANDNAME);
-    r = r && CommandDefinition_Consumed_2(b, l + 1);
-    r = r && CommandDefinition_Consumed_3(b, l + 1);
-    r = r && CommandDefinition_Consumed_4(b, l + 1);
-    r = r && Open_Bracket(b, l + 1);
-    r = r && CommandDefinition_Consumed_6(b, l + 1);
-    r = r && Close_Bracket(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    r = r && CommandName(b, l + 1);
+    p = r; // pin = CommandName
+    r = r && report_error_(b, CommandDefinition_Consumed_2(b, l + 1));
+    r = p && report_error_(b, CommandDefinition_Consumed_3(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consumed_4(b, l + 1)) && r;
+    r = p && report_error_(b, Open_Bracket(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consumed_6(b, l + 1)) && r;
+    r = p && Close_Bracket(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // SPACE*
+  // space*
   private static boolean CommandDefinition_Consumed_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed_0")) return false;
     while (true) {
@@ -576,7 +598,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (aliasseparator alias)*
+  // (comma Alias)*
   private static boolean CommandDefinition_Consumed_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed_2")) return false;
     while (true) {
@@ -587,24 +609,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // aliasseparator alias
+  // comma Alias
   private static boolean CommandDefinition_Consumed_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ALIASSEPARATOR, ALIAS);
+    r = consumeToken(b, COMMA);
+    r = r && Alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (SPACE Args_Can_Consume)?
+  // (space Args_Can_Consume)?
   private static boolean CommandDefinition_Consumed_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed_3")) return false;
     CommandDefinition_Consumed_3_0(b, l + 1);
     return true;
   }
 
-  // SPACE Args_Can_Consume
+  // space Args_Can_Consume
   private static boolean CommandDefinition_Consumed_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consumed_3_0")) return false;
     boolean r;
@@ -643,25 +666,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket
+  // space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket
   static boolean CommandDefinition_Consuming(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = CommandDefinition_Consuming_0(b, l + 1);
-    r = r && consumeToken(b, COMMANDNAME);
-    r = r && CommandDefinition_Consuming_2(b, l + 1);
-    r = r && CommandDefinition_Consuming_3(b, l + 1);
-    r = r && CommandDefinition_Consuming_4(b, l + 1);
-    r = r && Open_Bracket(b, l + 1);
-    r = r && CommandDefinition_Consuming_6(b, l + 1);
-    r = r && Close_Bracket(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    r = r && CommandName(b, l + 1);
+    p = r; // pin = CommandName
+    r = r && report_error_(b, CommandDefinition_Consuming_2(b, l + 1));
+    r = p && report_error_(b, CommandDefinition_Consuming_3(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consuming_4(b, l + 1)) && r;
+    r = p && report_error_(b, Open_Bracket(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consuming_6(b, l + 1)) && r;
+    r = p && Close_Bracket(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // SPACE*
+  // space*
   private static boolean CommandDefinition_Consuming_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_0")) return false;
     while (true) {
@@ -672,7 +695,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (aliasseparator alias)*
+  // (comma Alias)*
   private static boolean CommandDefinition_Consuming_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_2")) return false;
     while (true) {
@@ -683,24 +706,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // aliasseparator alias
+  // comma Alias
   private static boolean CommandDefinition_Consuming_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ALIASSEPARATOR, ALIAS);
+    r = consumeToken(b, COMMA);
+    r = r && Alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (SPACE Args_Can_Consume)?
+  // (space Args_Can_Consume)?
   private static boolean CommandDefinition_Consuming_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_3")) return false;
     CommandDefinition_Consuming_3_0(b, l + 1);
     return true;
   }
 
-  // SPACE Args_Can_Consume
+  // space Args_Can_Consume
   private static boolean CommandDefinition_Consuming_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_3_0")) return false;
     boolean r;
@@ -739,25 +763,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* commandname (aliasseparator alias)* (SPACE Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket
+  // space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket
   static boolean CommandDefinition_Consuming_Base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base")) return false;
-    if (!nextTokenIs(b, "", COMMANDNAME, SPACE)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
     r = CommandDefinition_Consuming_Base_0(b, l + 1);
-    r = r && consumeToken(b, COMMANDNAME);
-    r = r && CommandDefinition_Consuming_Base_2(b, l + 1);
-    r = r && CommandDefinition_Consuming_Base_3(b, l + 1);
-    r = r && CommandDefinition_Consuming_Base_4(b, l + 1);
-    r = r && Open_Bracket(b, l + 1);
-    r = r && CommandDefinition_Consuming_Base_6(b, l + 1);
-    r = r && Close_Bracket(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
+    r = r && CommandName(b, l + 1);
+    p = r; // pin = CommandName
+    r = r && report_error_(b, CommandDefinition_Consuming_Base_2(b, l + 1));
+    r = p && report_error_(b, CommandDefinition_Consuming_Base_3(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consuming_Base_4(b, l + 1)) && r;
+    r = p && report_error_(b, Open_Bracket(b, l + 1)) && r;
+    r = p && report_error_(b, CommandDefinition_Consuming_Base_6(b, l + 1)) && r;
+    r = p && Close_Bracket(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
-  // SPACE*
+  // space*
   private static boolean CommandDefinition_Consuming_Base_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base_0")) return false;
     while (true) {
@@ -768,7 +792,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // (aliasseparator alias)*
+  // (comma Alias)*
   private static boolean CommandDefinition_Consuming_Base_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base_2")) return false;
     while (true) {
@@ -779,24 +803,25 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // aliasseparator alias
+  // comma Alias
   private static boolean CommandDefinition_Consuming_Base_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, ALIASSEPARATOR, ALIAS);
+    r = consumeToken(b, COMMA);
+    r = r && Alias(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // (SPACE Args_Can_Consume)?
+  // (space Args_Can_Consume)?
   private static boolean CommandDefinition_Consuming_Base_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base_3")) return false;
     CommandDefinition_Consuming_Base_3_0(b, l + 1);
     return true;
   }
 
-  // SPACE Args_Can_Consume
+  // space Args_Can_Consume
   private static boolean CommandDefinition_Consuming_Base_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandDefinition_Consuming_Base_3_0")) return false;
     boolean r;
@@ -835,7 +860,27 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HideSubLine|HelpMsgLine) newline
+  // commandname|help|permission|user|hook|context|assert|nohelp|notab|postarg|hidesub|helpmsg
+  static boolean CommandName(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "CommandName")) return false;
+    boolean r;
+    r = consumeToken(b, COMMANDNAME);
+    if (!r) r = consumeToken(b, HELP);
+    if (!r) r = consumeToken(b, PERMISSION);
+    if (!r) r = consumeToken(b, USER);
+    if (!r) r = consumeToken(b, HOOK);
+    if (!r) r = consumeToken(b, CONTEXT);
+    if (!r) r = consumeToken(b, ASSERT);
+    if (!r) r = consumeToken(b, NOHELP);
+    if (!r) r = consumeToken(b, NOTAB);
+    if (!r) r = consumeToken(b, POSTARG);
+    if (!r) r = consumeToken(b, HIDESUB);
+    if (!r) r = consumeToken(b, HELPMSG);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // (space)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|PostArgLine|HideSubLine|HelpMsgLine) newline
   static boolean CommandProperty(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty")) return false;
     boolean r;
@@ -847,7 +892,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (SPACE)*
+  // (space)*
   private static boolean CommandProperty_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_0")) return false;
     while (true) {
@@ -877,7 +922,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
+  // (space)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
   static boolean CommandProperty_Base(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_Base")) return false;
     boolean r;
@@ -889,7 +934,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (SPACE)*
+  // (space)*
   private static boolean CommandProperty_Base_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_Base_0")) return false;
     while (true) {
@@ -918,7 +963,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (SPACE)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
+  // (space)* (HelpLine|PermissionLine|UserLine|HookLine|ContextLine|AssertLine|NoHelpLine|NoTabLine|HideSubLine|HelpMsgLine) newline
   static boolean CommandProperty_Consumed(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_Consumed")) return false;
     boolean r;
@@ -930,7 +975,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // (SPACE)*
+  // (space)*
   private static boolean CommandProperty_Consumed_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "CommandProperty_Consumed_0")) return false;
     while (true) {
@@ -959,7 +1004,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | SPACE)
+  // ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | space)
   static boolean ConsumingArg(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConsumingArg")) return false;
     if (!nextTokenIs(b, ARG_TYPE)) return false;
@@ -989,7 +1034,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // newline | SPACE
+  // newline | space
   private static boolean ConsumingArg_5(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ConsumingArg_5")) return false;
     boolean r;
@@ -1076,20 +1121,20 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // context separator contextname (SPACE contextname)*
+  // context space contextname (space contextname)*
   static boolean ContextLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContextLine")) return false;
     if (!nextTokenIs(b, CONTEXT)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, CONTEXT, SEPARATOR, CONTEXTNAME);
+    r = consumeTokens(b, 2, CONTEXT, SPACE, CONTEXTNAME);
     p = r; // pin = 2
     r = r && ContextLine_3(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (SPACE contextname)*
+  // (space contextname)*
   private static boolean ContextLine_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContextLine_3")) return false;
     while (true) {
@@ -1100,7 +1145,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // SPACE contextname
+  // space contextname
   private static boolean ContextLine_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "ContextLine_3_0")) return false;
     boolean r;
@@ -1180,20 +1225,20 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // help separator helpmessage (SPACE helpmessage)*
+  // help space helpmessage (space helpmessage)*
   static boolean HelpLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpLine")) return false;
     if (!nextTokenIs(b, HELP)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, HELP, SEPARATOR, HELPMESSAGE);
+    r = consumeTokens(b, 2, HELP, SPACE, HELPMESSAGE);
     p = r; // pin = 2
     r = r && HelpLine_3(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (SPACE helpmessage)*
+  // (space helpmessage)*
   private static boolean HelpLine_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpLine_3")) return false;
     while (true) {
@@ -1204,7 +1249,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // SPACE helpmessage
+  // space helpmessage
   private static boolean HelpLine_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpLine_3_0")) return false;
     boolean r;
@@ -1215,20 +1260,20 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // helpmsg separator helpmsgkey (SPACE helpmessagekey)*
+  // helpmsg space helpmsgkey (space helpmessagekey)*
   static boolean HelpMsgLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpMsgLine")) return false;
     if (!nextTokenIs(b, HELPMSG)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, HELPMSG, SEPARATOR, HELPMSGKEY);
+    r = consumeTokens(b, 2, HELPMSG, SPACE, HELPMSGKEY);
     p = r; // pin = 2
     r = r && HelpMsgLine_3(b, l + 1);
     exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // (SPACE helpmessagekey)*
+  // (space helpmessagekey)*
   private static boolean HelpMsgLine_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpMsgLine_3")) return false;
     while (true) {
@@ -1239,7 +1284,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // SPACE helpmessagekey
+  // space helpmessagekey
   private static boolean HelpMsgLine_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HelpMsgLine_3_0")) return false;
     boolean r;
@@ -1256,13 +1301,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // hook separator hookname
+  // hook space hookname
   static boolean HookLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "HookLine")) return false;
     if (!nextTokenIs(b, HOOK)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, HOOK, SEPARATOR, HOOKNAME);
+    r = consumeTokens(b, 2, HOOK, SPACE, HOOKNAME);
     p = r; // pin = 2
     exit_section_(b, l, m, r, p, null);
     return r || p;
@@ -1331,7 +1376,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SPACE* OBRACKET newline
+  // space* OBRACKET newline
   static boolean Open_Bracket(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Open_Bracket")) return false;
     if (!nextTokenIs(b, "", OBRACKET, SPACE)) return false;
@@ -1343,7 +1388,7 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SPACE*
+  // space*
   private static boolean Open_Bracket_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "Open_Bracket_0")) return false;
     while (true) {
@@ -1355,13 +1400,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // permission separator PERMISSION_VALUE (DOT PERMISSION_VALUE)*
+  // permission space PERMISSION_VALUE (DOT PERMISSION_VALUE)*
   static boolean PermissionLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "PermissionLine")) return false;
     if (!nextTokenIs(b, PERMISSION)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, PERMISSION, SEPARATOR, PERMISSION_VALUE);
+    r = consumeTokens(b, 2, PERMISSION, SPACE, PERMISSION_VALUE);
     p = r; // pin = 2
     r = r && PermissionLine_3(b, l + 1);
     exit_section_(b, l, m, r, p, null);
@@ -1396,13 +1441,13 @@ public class RedLibCommandParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // user separator (player | console | everyone)
+  // user space (player | console | everyone)
   static boolean UserLine(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "UserLine")) return false;
     if (!nextTokenIs(b, USER)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_);
-    r = consumeTokens(b, 2, USER, SEPARATOR);
+    r = consumeTokens(b, 2, USER, SPACE);
     p = r; // pin = 2
     r = r && UserLine_2(b, l + 1);
     exit_section_(b, l, m, r, p, null);

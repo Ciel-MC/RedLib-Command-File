@@ -44,7 +44,6 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
     @Override
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
         if (tokenType.equals(RedLibCommandTypes.COMMANDNAME)|
-            tokenType.equals(RedLibCommandTypes.ALIASSEPARATOR)|
             tokenType.equals(RedLibCommandTypes.ALIAS)) {
             return COMMAND_NAME_KEYS;
         } else if (tokenType.equals(RedLibCommandTypes.HELP) |
@@ -56,7 +55,9 @@ public class RedLibCommandSyntaxHighlighter extends SyntaxHighlighterBase {
                 tokenType.equals(RedLibCommandTypes.NOTAB) |
                 tokenType.equals(RedLibCommandTypes.POSTARG) |
                 tokenType.equals(RedLibCommandTypes.CONTEXT) |
-                tokenType.equals(RedLibCommandTypes.ASSERT)) {
+                tokenType.equals(RedLibCommandTypes.ASSERT) |
+                tokenType.equals(RedLibCommandTypes.HIDESUB)
+        ) {
             return TAG_KEYS;
         } else if (tokenType.equals(RedLibCommandTypes.DASHES) |
                 tokenType.equals(RedLibCommandTypes.ARG_NAME) |

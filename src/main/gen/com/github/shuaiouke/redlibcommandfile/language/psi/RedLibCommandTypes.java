@@ -9,7 +9,6 @@ public interface RedLibCommandTypes {
 
 
   IElementType ALIAS = new RedLibCommandTokenType("alias");
-  IElementType ALIASSEPARATOR = new RedLibCommandTokenType("aliasseparator");
   IElementType ARG_NAME = new RedLibCommandTokenType("ARG_NAME");
   IElementType ARG_TYPE = new RedLibCommandTokenType("ARG_TYPE");
   IElementType ASSERT = new RedLibCommandTokenType("assert");
@@ -51,8 +50,7 @@ public interface RedLibCommandTypes {
   IElementType PERMISSION_VALUE = new RedLibCommandTokenType("PERMISSION_VALUE");
   IElementType PLAYER = new RedLibCommandTokenType("player");
   IElementType POSTARG = new RedLibCommandTokenType("postarg");
-  IElementType SEPARATOR = new RedLibCommandTokenType("separator");
-  IElementType SPACE = new RedLibCommandTokenType("SPACE");
+  IElementType SPACE = new RedLibCommandTokenType("space");
   IElementType USER = new RedLibCommandTokenType("user");
 
   class Factory {

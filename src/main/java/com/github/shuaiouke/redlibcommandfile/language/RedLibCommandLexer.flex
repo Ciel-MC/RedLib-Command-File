@@ -80,10 +80,14 @@ FLAG_COLON=\:-+
     {COMMENT} {return COMMENT;}
 }
 
-<NOARG> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+<NOARG> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
+    {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
+    {SPACE} {return SPACE;}
+}
 
 <COMMAND> {
-    "," {return ALIASSEPARATOR;}
+    "," {return COMMA;}
     "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {return NEWLINE;}
     {SPACE} {yybegin(ARGS);return SPACE;}
@@ -142,32 +146,36 @@ FLAG_COLON=\:-+
 }
 
 <HELP> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<HELP> {SPACE} {yybegin(HELPVALUE);return SEPARATOR;}
+<HELP> {SPACE} {yybegin(HELPVALUE);return SPACE;}
 <HELPVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {HELPMESSAGE} {return HELPMESSAGE;}
     {SPACE} {return SPACE;}
 }
 
 <HELPMSG> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<HELPMSG> {SPACE} {yybegin(HELPMSGVALUE);return SEPARATOR;}
+<HELPMSG> {SPACE} {yybegin(HELPMSGVALUE);return SPACE;}
 <HELPMSGVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {HELPMESSAGE} {return HELPMSGKEY;}
     {SPACE} {return SPACE;}
 }
 
 <PERMISSION> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<PERMISSION> {SPACE} {yybegin(PERMISSIONVALUE);return SEPARATOR;}
+<PERMISSION> {SPACE} {yybegin(PERMISSIONVALUE);return SPACE;}
 <PERMISSIONVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     "." {return DOT;}
     {WORD} {return PERMISSION_VALUE;}
 }
 
 <USER> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<USER> {SPACE} {yybegin(USERVALUE);return SEPARATOR;}
+<USER> {SPACE} {yybegin(USERVALUE);return SPACE;}
 <USERVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     "player" {return PLAYER;}
     "console" {return CONSOLE;}
     "everyone" {return EVERYONE;}
@@ -175,23 +183,26 @@ FLAG_COLON=\:-+
 }
 
 <HOOK> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<HOOK> {SPACE} {yybegin(HOOKVALUE);return SEPARATOR;}
+<HOOK> {SPACE} {yybegin(HOOKVALUE);return SPACE;}
 <HOOKVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {WORD} {return HOOKNAME;}
 }
 
 <CONTEXT> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<CONTEXT> {SPACE} {yybegin(CONTEXTVALUE);return SEPARATOR;}
+<CONTEXT> {SPACE} {yybegin(CONTEXTVALUE);return SPACE;}
 <CONTEXTVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {WORD} {return CONTEXTNAME;}
     {SPACE} {return SPACE;}
 }
 
 <ASSERT> {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
-<ASSERT> {SPACE} {yybegin(ASSERTVALUE);return SEPARATOR;}
+<ASSERT> {SPACE} {yybegin(ASSERTVALUE);return SPACE;}
 <ASSERTVALUE> {
+    "{" {yybegin(YYINITIAL);return OBRACKET;}
     {NEWLINE} {yybegin(YYINITIAL);return NEWLINE;}
     {WORD} {return ASSERTNAME;}
     {SPACE} {return SPACE;}
