@@ -6,6 +6,7 @@
 - Fixed a bug which `hidesub` is not properly highlighted.
 - Fixed not being able to use key words as command names
 - Added commenter to allow commenting via hotkey
+## [0.2.13]
 ## [0.2.12]
 - Fixed flags being broken from adding constraints
 - Added support for the `hidesub` tag
