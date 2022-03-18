@@ -6,7 +6,7 @@
 
 ## Description
 <!-- Plugin description -->
-Adds grammar checking and syntax highlighting for the command file use by RedLib(https://github.com/Redempt/RedLib) by Redempt to Intellij IDEA
+Adds grammar checking and syntax highlighting for the command file use by [RedCommand](https://github.com/Redempt/RedCommands) by Redempt to Intellij IDEA
 
 If you are having any issues or problems with this plugin, please report them on the [GitHub issues page](https://github.com/Shuaiouke/RedLib-Command-File/issues), join the [RedSupport Discord server](https://discord.gg/Frgkk99unx), or add me on [Discord](https://discord.com/users/441474795100438530)
 <!-- Plugin description end -->
