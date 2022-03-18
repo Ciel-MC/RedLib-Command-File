@@ -24,20 +24,15 @@ private CommandDef ::= CommandDefinition | CommandDefinition_Consuming | newline
 
 private CommandDef_Consumed ::= CommandDefinition_Consumed | newline
 
-private CommandDefinition ::= space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket {pin = CommandName}
-//private CommandDefinition ::= space* commandname (space alias)* (space Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
+private CommandDefinition ::= space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line | Blank_Line)* Close_Bracket
 
-private CommandDefinition_Consuming ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket {pin = CommandName}
-//private CommandDefinition_Consuming ::= space* commandname (space alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket
+private CommandDefinition_Consuming ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed | Blank_Line)* Close_Bracket
 
-private CommandDefinition_Base ::= space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket {pin = CommandName}
-//private CommandDefinition_Base ::= space* commandname (space alias)* (space Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket
+private CommandDefinition_Base ::= space* CommandName (comma Alias)* (space Args)? newline? Open_Bracket (Line_Base | Blank_Line)* Close_Bracket
 
-private CommandDefinition_Consuming_Base ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket {pin = CommandName}
-//private CommandDefinition_Consuming_Base ::= space* commandname (space alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket
+private CommandDefinition_Consuming_Base ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Base_Consuming | Blank_Line)* Close_Bracket
 
-private CommandDefinition_Consumed ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket {pin = CommandName}
-//private CommandDefinition_Consumed ::= space* commandname (space alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket
+private CommandDefinition_Consumed ::= space* CommandName (comma Alias)* (space Args_Can_Consume)? newline? Open_Bracket (Line_Consumed_Recovering | Blank_Line)* Close_Bracket
 
 private CommandName ::= commandname|help|permission|user|hook|context|assert|nohelp|notab|postarg|hidesub|helpmsg
 
@@ -92,13 +87,13 @@ private Args_Can_Consume ::= ConsumingArg*
 
 private Args ::= Arg*
 
-private Arg ::= (((ARG_TYPE CONSTRAINT? COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | space)
+private Arg ::= (((ARG_TYPE CONSTRAINT? COLON)? Flag) | (ARG_TYPE CONSTRAINT? COLON Argument)) (newline | space |)
 
-private ConsumingArg ::= ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | space)
+private ConsumingArg ::= ARG_TYPE CONSTRAINT? CONSUME_TOKEN? COLON Consuming_Argument (newline | space |)
 
 private Flag ::= DASHES FLAG_NAME (COMMA DASHES FLAG_NAME)* FLAG_MODIFIER? (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)?
 
-private Argument ::= ARG_NAME (noshowtype | ((noshowtype) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
+private Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) (BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
 
 private Consuming_Argument ::= ARG_NAME (noshowtype | ((notrequired | bothmodifiers) ( BRACKET_OPEN DEFAULT_VALUE? BRACKET_CLOSE)? ))?
 

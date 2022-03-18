@@ -131,9 +131,9 @@ FLAG_COLON=\:-+
 {
     "(" {yybegin(DEFAULTVALUE);return BRACKET_OPEN;}
     ")" {yybegin(ARGS);return BRACKET_CLOSE;}
+    {NOSHOWTYPENOREQ} {return BOTHMODIFIERS;}
     {NOSHOWTYPE} {return NOSHOWTYPE;}
     {NOREQ} {return NOTREQUIRED;}
-    {NOSHOWTYPENOREQ} {return BOTHMODIFIERS;}
     {NEWLINE} {yybegin(COMMAND);return NEWLINE;}
     {SPACE} {yybegin(ARGS);return SPACE;}
     {WORD} {return ARG_NAME;}

@@ -3,9 +3,10 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Small hotfix
 ## [0.2.15]
 - Fixed a bug which `hidesub` is not properly highlighted.
-- Fixed not being able to use key words as command names
+- Fixed not being able to use keywords as command names
 - Added commenter to allow commenting via hotkey
 ## [0.2.13]
 ## [0.2.12]
