@@ -3,6 +3,7 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+## [0.2.16]
 - Small hotfix
 ## [0.2.15]
 - Fixed a bug which `hidesub` is not properly highlighted.
