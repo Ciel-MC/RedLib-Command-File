@@ -50,7 +50,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: liberica
+          distribution: zulu
           java-version: 11
 
       # Check out current repository
@@ -97,7 +97,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: liberica
+          distribution: zulu
           java-version: 11
 
       # Check out current repository
@@ -161,7 +161,7 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          distribution: liberica
+          distribution: zulu
           java-version: 11
 
       # Check out current repository
