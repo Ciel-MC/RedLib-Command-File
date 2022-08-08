@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 - Updated to be compatible with 2022.2
+- Updated the testing IDE to be 2022.2
 ## [0.2.16]
 - Small hotfix
 ## [0.2.15]
