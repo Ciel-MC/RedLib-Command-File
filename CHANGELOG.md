@@ -3,7 +3,10 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+
+## [0.2.18]
 - Updated to be compatible with 2022.3
+
 ## [0.2.17]
 - Updated to be compatible with 2022.2
 - Updated the testing IDE to be 2022.2
@@ -61,6 +64,8 @@
 - Completed all command properties
 
 ## [0.0.3]
+- Added basic functionality
+- Added basic functionality
 - Added basic functionality
 - Added basic functionality
 
