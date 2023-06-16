@@ -3,6 +3,8 @@
 # RedLib-Command-File Changelog
 
 ## [Unreleased]
+- Use a new version of the plugin template
+- Move the project to use Kotlin
 
 ## [0.2.18]
 - Updated to be compatible with 2022.3
