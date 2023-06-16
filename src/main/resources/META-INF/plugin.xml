@@ -1,23 +1,23 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.shuaiouke.redlibcommandfile</id>
+    <id>com.github.cielmc.redlibcommandfile</id>
     <name>RedLib-Command-File</name>
-    <vendor>shuaiouke</vendor>
+    <vendor>CielMC</vendor>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="RedLib Command File" implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandFileType"
+        <fileType name="RedLib Command File" implementationClass="com.github.cielmc.redlibcommandfile.language.RedLibCommandFileType"
                   fieldName="INSTANCE" language="RLCF" extensions="rdcml"/>
         <lang.parserDefinition language="RLCF"
-                               implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandParserDefinition"/>
+                               implementationClass="com.github.cielmc.redlibcommandfile.language.RedLibCommandParserDefinition"/>
         <lang.syntaxHighlighterFactory language="RLCF"
-                                       implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandSyntaxHighlighterFactory"/>
-        <colorSettingsPage implementation="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
+                                       implementationClass="com.github.cielmc.redlibcommandfile.language.RedLibCommandSyntaxHighlighterFactory"/>
+        <colorSettingsPage implementation="com.github.cielmc.redlibcommandfile.language.RedLibCommandColorSettingsPage"/>
         <lang.braceMatcher language="RLCF"
-                           implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandBraceMatcher"/>
+                           implementationClass="com.github.cielmc.redlibcommandfile.language.RedLibCommandBraceMatcher"/>
         <lang.commenter language="RLCF"
-                        implementationClass="com.github.shuaiouke.redlibcommandfile.language.RedLibCommandCommenter"/>
+                        implementationClass="com.github.cielmc.redlibcommandfile.language.RedLibCommandCommenter"/>
     </extensions>
     <applicationListeners>
     </applicationListeners>

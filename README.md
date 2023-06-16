@@ -1,6 +1,6 @@
 # RedLib-Command-File
 
-![Build](https://github.com/Shuaiouke/RedLib-Command-File/workflows/Build/badge.svg)
+![Build](https://github.com/Ciel-MC/RedLib-Command-File/workflows/Build/badge.svg)
 [![Version](https://img.shields.io/jetbrains/plugin/v/17075-redlib-command-file.svg)](https://plugins.jetbrains.com/plugin/17075-redlib-command-file)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/17075-redlib-command-file.svg)](https://plugins.jetbrains.com/plugin/17075-redlib-command-file)
 
@@ -8,7 +8,7 @@
 <!-- Plugin description -->
 Adds grammar checking and syntax highlighting for the command file use by [RedCommand](https://github.com/Redempt/RedCommands) by Redempt to Intellij IDEA
 
-If you are having any issues or problems with this plugin, please report them on the [GitHub issues page](https://github.com/Shuaiouke/RedLib-Command-File/issues), join the [RedSupport Discord server](https://discord.gg/Frgkk99unx), or add me on [Discord](https://discord.com/users/441474795100438530)
+If you are having any issues or problems with this plugin, please report them on the [GitHub issues page](https://github.com/Ciel-MC/RedLib-Command-File/issues), join the [RedSupport Discord server](https://discord.gg/Frgkk99unx), or add me on [Discord](https://discord.com/users/441474795100438530)
 <!-- Plugin description end -->
 
 ## Installation
@@ -20,7 +20,7 @@ If you are having any issues or problems with this plugin, please report them on
   
 - Manually:
 
-  Download the [latest release](https://github.com/Shuaiouke/RedLib-Command-File/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/Ciel-MC/RedLib-Command-File/releases/latest) and install it manually using
   <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 
